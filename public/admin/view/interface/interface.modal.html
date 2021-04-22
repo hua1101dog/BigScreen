@@ -1,0 +1,67 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{item._id?'编辑':'添加'}}接口</h4>
+</div>
+<div class="modal-body container-fluid form-horizontal">
+    <form name="form" novalidate>
+    <div class="form-group">
+        <label class="col-xs-4 control-label required">接口名称：</label>
+        <div class="col-xs-6">
+            <input type="text" class="form-control" ng-model="item.name" name="name" required/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label ">标签：</label>
+        <div class="col-xs-6">
+            <input type="text" class="form-control" ng-model="item.tags" name="tags" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label ">接口前缀：</label>
+        <div class="col-xs-6">
+            <select class="form-control" ng-required="item.url"  ng-model="item.urlPrefix._id" ng-options="o._id as (o.name+' ('+o.prefix+')') for o in urlPrefixList" >
+                <option value="">--请选择--</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label ">代理接口：</label>
+        <div class="col-xs-6">
+            <input type="text" class="form-control" ng-model="item.url" name="url"
+                   uib-tooltip="{{item.url && form.url.$invalid?'有重复':null}}" id="{{item._id}}"
+                   ensure-unique="url" api="/interface/existUrl_mute"
+            />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label " ng-required="item.url">请求方式：</label>
+        <div class="col-xs-6">
+            <select class="form-control" ng-required="item.url"  ng-model="item.method" ng-options="o as o for o in ['GET','POST']" >
+                <option value="">--请选择--</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label ">定时器(Cron风格)：</label>
+        <div class="col-xs-6">
+            <input type="text" class="form-control" ng-model="item.fetchInvl" placeholder="秒 分 时 日 月 星期" name="fetchInvl" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-xs-4 control-label">参数：</label>
+        <div class="col-xs-6" >
+            <div ng-repeat="param in item.params track by $index"  style="margin-bottom: 5px;white-space: nowrap;">
+                <input type="text" ng-model="param.key" placeholder='字段'  class="form-control pull-left" required>
+                <button class="btn btn-sm btn-default " style="margin: 2px 0 0 2px;"
+                        ng-click="item.params.splice(item.params.indexOf(param),1)"><i class="glyphicon glyphicon-minus"></i></button>
+            </div>
+            <button class="btn btn-sm btn-default" ng-click="item.params.push({})"><i class="glyphicon glyphicon-plus" ></i>添加参数</button>
+        </div>
+    </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form,item)">确定</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>
+

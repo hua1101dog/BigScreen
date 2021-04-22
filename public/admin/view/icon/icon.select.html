@@ -1,0 +1,62 @@
+<div class="modal-body container-fluid " style="padding-bottom: 0px">
+    <div style="display: table;width: 100%">
+        <div style="width:140px;display: table-cell;">
+            <!--style="overflow-y: auto;overflow-x: hidden"-->
+            <div  style="height: 560px;overflow-y: auto">
+                <ul >
+                    <li ng-repeat="folder in folders" style="position: relative">
+                        <button ng-click="selectFolder(folder)" class="btn btn-default nameBtn" ng-class="{'active':folder == curFolder}" >{{folder.text}}</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div style="padding-left: 15px" ng-style="{visibility:curFolder?'visible':'hidden'}">
+            <div class="x_panel" >
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>名称 </label>
+                        <input folder="text" ng-model="search.name"  class="form-control" />
+                    </div>
+                    <button class="btn btn-primary" ng-click="find()" >查询</button>
+                    <button class="btn btn-default" ng-click="search.name=''" >重置</button>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body" style="height: 500px;overflow-y: auto">
+                    <p ng-if="curFolder.list.length == 0" class="text-center">暂无图标</td></p>
+                    <div class="clearfix">
+                        <div class="photoWraper"  ng-repeat="item in curFolder.list|filter:{name:search.name}">
+                            <div ng-click="showPhoto(item.url)">
+                                <img onerror="javascript:this.src='images/detail.png';"
+                                     ng-src="{{item.url}}" >
+                            </div>
+                            <label role="button" ng-style="{'background-color':item.checked?'#5bc0de':'dark'}" style="word-break: break-all;" ng-click="checkOne(item)"><i  ng-class="{'glyphicon-check':item.checked,'glyphicon-unchecked':!item.checked}" class="glyphicon"></i>
+                                {{item.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">已选择图标：
+            </div>
+            <div class="panel-body" >
+                <div class="photoWraper"  ng-repeat="item in icons">
+                    <div ng-click="showPhoto(item.url)">
+                        <img onerror="javascript:this.src='images/detail.png';"
+                             ng-src="{{item.url}}" >
+                    </div>
+                    <img src="images/refuse.png" role="button" class="close" ng-click="remove(item)"></img>
+                    <label role="button"  style="word-break: break-all;">{{item.name}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save()">确定</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>

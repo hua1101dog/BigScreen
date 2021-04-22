@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" id="mainFrame">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Cache" content="no-cache">
+  <title>光谷联合数字园区事业部管理数据</title>
+  <link href="../res/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../stylesheets/style.css" rel="stylesheet" type="text/css" />
+  <link href="../stylesheets/iconfont.css" rel="stylesheet" type="text/css">
+</head>
+
+<body ng-app="showApp" ng-controller="showManegeController" ng-cloak>
+  <div class="mianContent">
+    <div class="top">
+      <h2>数字园区事业部管理数据</h3>
+        <img src="../pic/intelliDept/jx.png" alt="">
+        <h3 class="time">{{timeStrOne}} {{timeStrTwo}}</h3>
+    </div>
+    <div style="display: flex;">
+      <div class="left">
+        <div class="weather">
+          <div class="inline_block">
+            <img ng-src="{{weather.weatherType.url}}" alt="">
+          </div>
+          <div class="inline_block" style="margin-left: 10px">
+            <span class="temperature">{{weather.temperature}}</span>
+            <em class="c">℃</em>
+            <em class="wea">{{weather.weatherType.name}}(实时)</em>
+          </div>
+          <div class="inline_block" style="margin-left: 30px">
+            <span class="day">
+              {{timeStrThree}} <br>{{weather.lunarCalendar}}<br>
+            </span>
+            <span class="air">{{weather.aqi}} {{weather.airQuality}}</span>
+          </div>
+        </div>
+        <div class="environment">
+          <h4>环境监测</h4>
+          <div style="position: relative;height: 155px;margin-top: 57px">
+            <img src="../pic/intelliDept/circular_1.png" alt="" class="circly">
+            <img src="../pic/intelliDept/pointer_1.png" alt="" class="pointer">
+            <span style="color:#6EED69;font-size: 16px;vertical-align: text-bottom;position: absolute;right: 50%;
+                top: 50%;transform: translate(-98px,-50%)">舒适</span>
+            <span
+              style="color:#FDB83A;font-size: 16px;vertical-align: text-bottom;position: absolute; left:50%;top:-35px;transform: translate(-50%);">接受</span>
+            <span style="color:#FDB83A;font-size: 16px;vertical-align: text-bottom;position: absolute;right: 50%;
+                top: 50%;transform: translate(127px,-50%)">忍受</span>
+          </div>
+        </div>
+        <div class="hj">
+          <div class="inline_block w3">
+            <div style="font-size: 40px;color:#17A1F8;font-family:UniversUltraCondensedBQ-Regular;">
+              {{humidity}}%</div>
+            <div style="color:#B2C9FF;font-size:16px;">湿度</div>
+          </div>
+          <div class="inline_block w3">
+            <div style="font-size: 40px;color:#17A1F8;font-family:UniversUltraCondensedBQ-Regular;">
+              {{temperatureValue}}</div>
+            <div style="color:#B2C9FF;font-size:16px;">温度/℃</div>
+          </div>
+          <div class="inline_block w3">
+            <div style="font-size: 40px;color:#17A1F8;font-family:UniversUltraCondensedBQ-Regular;">{{pm}}
+            </div>
+            <div style="color:#B2C9FF;font-size:16px;">PM2.5</div>
+          </div>
+        </div>
+        <div class="engergy">
+          <h4>能耗监测</h4>
+          <div style="margin: 0 46px;" class="inline_block">
+            <div style="color:#97CDFF;font-size: 14px">当前用电量</div>
+            <div style="font-size: 50px;color:#17A1F8;font-family:UniversUltraCondensedBQ-Regular;">
+              {{engery.value}} <span style="font-size: 16px;font-family:MicrosoftYaHei">KWh</span></div>
+            <!-- <div><img src="../pic/intelliDept/engery.png" alt="" style="height: 8px;"></div> -->
+
+          </div>
+          <div style="vertical-align: top;margin-top: -1px;" class="inline_block">
+            <div style="color:#97CDFF;font-size: 14px" class="inline_block">昨日用电量</div>
+            <div class="inline_block" style="margin-left: 20px;"
+              ng-style="{'color':engery.prevMomStatus==1?'#17E272':'red'}"><span
+                ng-if="engery.prevMomStatus==1">↑</span><span
+                ng-if="engery.prevMomStatus==2">↓</span>{{engery.prevMomPercentValue}}环比前日</div>
+            <div style="font-size: 50px;color:#17A1F8;font-family:UniversUltraCondensedBQ-Regular;">
+              {{engery.prevValue}} <span style="font-size: 16px;font-family:MicrosoftYaHei">KWh</span>
+            </div>
+
+            <!-- <div><img src="../pic/intelliDept/engery.png" alt="" style="height: 8px;"></div> -->
+          </div>
+          <div style="margin-top: 20px">
+            <p
+              style="font-size:14px;font-family:MicrosoftYaHei;font-weight:400;color:rgba(151,205,255,1);text-align: center;">
+              - 月度用电趋势 -</p>
+            <div id="engergy" style="height: 200px;">
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="center">
+        <div>
+          <div style="margin-top: 6px;height: 350px;background: rgba(13,44,82,0.3);width:916px">
+            <!-- <p class="title">接待安排</p> -->
+            <!-- <table class="tables" style="margin-bottom:0px">
+                            <tr>
+                                <td class="name"><span>接待时间</td>
+                                <td class="name"><span>对接人</td>
+                            </tr>
+                            <tr ng-repeat="item in visitorList track by $index"
+                                style="border-bottom: 1px solid #0c0b0b">
+                                <td class="name"><span style="color:rgba(220,233,255,1)">{{item.visitDate |
+                                        date:'yyyy-MM-dd'}}</td>
+                                <td class="name">
+                                    <div style="color:rgba(220,233,255,1)">{{item.visitor}}
+                                </td>
+                            </tr>
+
+                        </table> -->
+            <div
+              style="width: 100%;padding-top: 20px;display: flex;flex-direction: row;justify-content: center;align-items: center">
+              <!--<img src="./assets/img/dot.png.png" alt="">-->
+              <img style="height: 19px;width: 19px" src="../pic/intelliDept/dot.png" alt="">
+              <span class="bp-0">{{birthday.title}}</span>
+              <img style="height: 19px;width: 19px" src="../pic/intelliDept/dot.png" alt="">
+            </div>
+            <div class="wys-o">
+              <div class="wys">
+                <span>{{birthday.bless}}</span>
+                <span style="margin-left: 290px">{{birthday.bless}}</span>
+              </div>
+            </div>
+            <div class="lkj">
+              <div class="lkj-i" ng-if="mutiPic">
+                <div class="lkj-0" ng-class="'lkj-0'+bp_class2[$index]"
+                  ng-repeat="item in birthday.staffList track by $index">
+                  <div class="l-0-1">
+                    <div class="l-pic">
+                      <img ng-src="{{item.userIcon}}" style="width: 100%" alt="">
+                    </div>
+                    <div class="l-pic-t">
+                      <img class="l-pic-t-img" src="../pic/intelliDept/cake.png" alt="">
+                    </div>
+                  </div>
+                  <span class="l-0-2">{{item.userName}}</span>
+                  <!-- <span class="l-0-3">{{item.deptName}}</span> -->
+                </div>
+              </div>
+              <div class="lkj-i" ng-if="!mutiPic">
+                <div class="lkj-0-ss" ng-if="!mutiPic" ng-repeat="item in birthday.staffList track by $index">
+                  <div class="l-0-1">
+                    <div class="l-pic">
+                      <img ng-src="{{item.userIcon}}" style="width: 100%" alt="">
+                    </div>
+                    <div class="l-pic-t">
+                      <img class="l-pic-t-img" src="../pic/intelliDept/cake.png" alt="">
+                    </div>
+                  </div>
+                  <span class="l-0-2">{{item.userName}}</span>
+                  <!-- <span class="l-0-3">{{item.deptName}}</span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="activity">
+          <div style="margin-top: 4px;background: rgba(13,44,82,0.3);overflow:hidden">
+            <p class="title">活动赛事</p>
+
+            <div class="r-b-1">
+              <div class="active-c" ng-class="'a-c'+ac_class[$index]" ng-repeat="item in activeList track by $index">
+                <div style="width: 437px">
+                  <p class="overtext" style="margin-top: 0;width: 417px">活动事项：{{item.title}}</p>
+                  <p class="overtext" style="width: 417px">活动地点：{{item.place}}</p>
+                  <p class="overtext" style="width: 417px">活动开始：{{item.beginTime}}</p>
+                  <p class="overtext" style="width: 417px">活动结束：{{item.endTime}}</p>
+
+                </div>
+                <div style="width: 437px">
+                  <img style="width:350px;height:171px;padding:5px;display: inline-block" ng-src="{{item.photo}}"
+                    alt="">
+                </div>
+              </div>
+            </div>
+            <div class="r-b-2 ">
+              <div class="inline_block active-d" ng-repeat="item in activeList track by $index">
+                <div ng-class="{'b-c0':ac_class[$index]==0,'b-c1':ac_class[$index]!==0}"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="project" style="margin-top: -30px;">
+          <div style="background: rgba(13,44,82,0.3);height: 272px">
+            <p class="title">项目节点</p>
+            <table class="tables" style="margin-bottom:0px">
+              <tr style="border-bottom: 1px solid #0c0b0b">
+                <td class="name" style="line-height: 34px;width: 50%;"><span>项目名称</span> </td>
+                <!-- <td class="name" style="line-height: 34px; width: 33%;"><span>项目地</span> </td> -->
+                <td class="name" style="line-height: 34px;"><span>节点描述</span> </td>
+              </tr>
+            </table>
+            <div id="parking-msg-c" style="height:175px;overflow:scroll">
+              <table class="tables" style="margin-bottom:0px;border-bottom: 1px solid #0c0b0b">
+                <tr ng-repeat="item in projectList" style="border-bottom: 1px solid #0c0b0b">
+                  <td class="name" style="line-height: 34px;width: 50%;"><span
+                      style="color:rgba(220,233,255,1)">{{item.name}}</span></td>
+                  <!-- <td class="name" style="line-height: 34px;  width: 33%;"><span
+                                            style="color:rgba(220,233,255,1)">{{item.addr}}</span></td> -->
+                  <td class="name" style="line-height: 34px;"><span
+                      style="color:rgba(220,233,255,1)">{{item.desc}}</span></td>
+
+                </tr>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="right_top">
+          <div class="item">
+            <!-- <div>
+                            <span style="color:#14CAFF;font-size: 14px">1号电梯</span>
+                        </div>
+                        <div style="margin-top: 5px;font-size: 50px">
+                            <span class="dt_ico"><img ng-src="{{elevarlist.one.s_img}}" alt=""
+                                    style="height: 30px;"></span>
+                            <span
+                                style="color:#14CAFF; font-family: UniversUltraCondensedBQ-Regular;">{{elevarlist.one.f}}</span>
+                            <span style="color:#14CAFF;font-size: 20px;margin-left: -11px">F</span>
+                        </div> -->
+          </div>
+          <div class="item">
+            <!-- <div>
+                            <span style="color:#14CAFF;font-size: 14px">2号电梯</span>
+                        </div>
+                        <div style="margin-top: 5px;font-size: 50px">
+                            <span class="dt_ico"><img ng-src="{{elevarlist.two.s_img}}" alt=""
+                                    style="height: 30px;"></span>
+                            <span
+                                style="color:#14CAFF; font-family: UniversUltraCondensedBQ-Regular;">{{elevarlist.two.f}}</span>
+                            <span style="color:#14CAFF;font-size: 20px;margin-left: -11px">F</span>
+                        </div> -->
+          </div>
+          <div class="item">
+            <!-- <div>
+                            <span style="color:#14CAFF;font-size: 14px">3号电梯</span>
+                        </div>
+                        <div style="margin-top: 5px;font-size: 50px">
+                            <span class="dt_ico"><img ng-src="{{elevarlist.three.s_img}}" alt=""
+                                    style="height: 30px;"></span>
+                            <span
+                                style="color:#14CAFF; font-family: UniversUltraCondensedBQ-Regular;">{{elevarlist.three.f}}</span>
+                            <span style="color:#14CAFF;font-size: 20px;margin-left: -11px">F</span>
+                        </div> -->
+          </div>
+        </div>
+        <div class="right_middle" style="height: 490px;">
+          <h4 style="padding:10px">会议室预定</h4>
+          <div>
+            <div style="padding: 0 30px;">
+              <span
+                style="color:#2772F0;font-size: 18px;width:74%;display: inline-block;margin-left: 15px">6楼7号会议室</span>
+              <span><span
+                  style="display: inline-block;height: 10px; width: 20px;background: #0CD28E;margin-right: 5px;"></span>
+                <span style="color:#2772F0;font-size: 14px;">有预定</span></span>
+            </div>
+            <p style="color:#2772F0;font-size: 18px;padding: 10px 30px 0px 30px;margin-left: 15px">AM</p>
+            <div class="ydDiv">
+              <div class="hys">
+                <div class="item">
+                  7:00
+                </div>
+                <div class="item">
+                  8:00
+                </div>
+
+                <div class="item">
+                  9:00
+                </div>
+                <div class="item">
+                  10:00
+                </div>
+                <div class="item">
+                  11:00
+                </div>
+                <div class="item">
+                  12:00
+                </div>
+                <div class="item">
+                  13:00
+                </div>
+                <div class="item">
+                  14:00
+                </div>
+              </div>
+              <div class="hys" style="margin-top: 1px">
+                <div class="item">
+                </div>
+                <div class="item""></div>
+                                    <div class=" item"></div>
+                <div class="item"></div>
+                <div class="m-t-cover" ng-repeat="_item in shangwu"
+                  ng-style="{left:(_item.beginDuration-0==0?1:_item.beginDuration)*50+'px',width:(_item.endDuration-_item.beginDuration)*50+'px'}">
+                  <div>{{_item.name?_item.name:'已预订'}}</div>
+                </div>
+
+              </div>
+            </div>
+            <p style="color:#2772F0;font-size: 18px;padding: 10px 30px 0px 30px;margin-left: 15px">PM</p>
+            <div class="ydDiv">
+              <div class="hys_pm">
+
+                <div class="item">
+                  15:00
+                </div>
+                <div class="item">
+                  16:00
+                </div>
+                <div class="item">
+                  17:00
+                </div>
+                <div class="item">
+                  18:00
+                </div>
+                <div class="item">
+                  19:00
+                </div>
+                <div class="item">
+                  20:00
+                </div>
+                <div class="item">
+                  21:00
+                </div>
+                <div class="item">
+                  22:00
+                </div>
+              </div>
+              <div class="hys_pm" style="margin-top: 1px">
+                <div class="item">
+
+                </div>
+                <div class="item">
+
+                </div>
+                <div class="item">
+
+                </div>
+                <div class="item">
+
+                </div>
+                <div class="item">
+
+                </div>
+                <div class="m-t-cover" ng-repeat="_item in xiawu"
+                  ng-style="{left:(_item.beginDuration-8)*40+'px',width:((_item.endDuration-0==20?19:_item.endDuration)-_item.beginDuration)*40+'px'}">
+                  <div>{{_item.name?_item.name:'已预订'}}</div>
+                </div>
+
+              </div>
+            </div>
+            <p style="color:#2772F0;font-size: 18px;padding: 10px 30px 0px 30px;margin-left: 15px">明日预定</p>
+            <p style="color:#fff;font-size: 16px;padding: 0px 30px 30px 30px;;margin-left: 15px"
+              ng-repeat="item in tomorrowList" ng-if="tomorrowList && tomorrowList.length>0">
+              {{item.name}} {{item.time}}
+            </p>
+            <p style="color:#fff;font-size: 16px;padding: 0px 30px 30px 30px;margin-left: 15px"
+              ng-if="!tomorrowList || tomorrowList.length==0">
+              暂无
+            </p>
+          </div>
+        </div>
+        <div class="right_bottom" style="height: 410px;">
+          <!-- <h4 style="line-height: 70px;">卫生间使用</h4>
+                    <div class="toilet">
+                        <div class="left">
+                            <img src="../pic/intelliDept/man_1.png" alt=""
+                                style="height: 110px;widdth:110px;margin-top: 129px;">
+                        </div>
+                        <div style="margin-top: -3px;">
+                            <span style="color:#14CAFF; margin-left: 25px;font-size: 18px;">男 &nbsp;Male</span>
+                            <div style="margin-top: 5px">
+                                <div class="inline_num">
+                                    <div class="num_top">{{menInline}}</div>
+                                    <div class="num_bottom">当前人数</div>
+                                </div>
+                                <div class="inline_num">
+                                    <div class="num_top">{{menOnline}}</div>
+                                    <div class="num_bottom">剩余空位</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="toilet">
+                        <div class="left">
+                            <img src="../pic/intelliDept/women_1.png" alt=""
+                                style="height: 110px;widdth:110px;margin-top: 193px;">
+                        </div>
+                        <div style="margin-top: 50px;">
+                            <span style="color:#FC4E7F; margin-left: 25px;font-size: 18px;">女 &nbsp;Women</span>
+                            <div style="margin-top: 5px">
+                                <div class="inline_num">
+                                    <div class="num_top">{{womenInline}}</div>
+                                    <div class="num_bottom">当前人数</div>
+                                </div>
+                                <div class="inline_num">
+                                    <div class="num_top">{{womenOnline}}</div>
+                                    <div class="num_bottom">剩余空位</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+          <div style="margin-top: 5px;height: 409px;background: rgba(13,44,82,0.3)">
+            <p class="title">接待安排</p>
+            <table class="tables" style="margin-bottom:0px">
+              <tr>
+                <!-- <td class="name"><span>TOP</td> -->
+                <td class="name" style="width: 50%;"><span>接待时间</td>
+                <!-- <td class="name"><span>时间</td> -->
+                <td class="name" style="width: 50%;"><span>对接人</td>
+              </tr>
+            </table>
+            <div id="visitor-msg-c" style="height:293px;overflow:scroll">
+              <table class="tables" style="margin-bottom:0px;border-bottom: 1px solid #0c0b0b">
+                <tr ng-repeat="item in visitorList track by $index" style="border-bottom: 1px solid #0c0b0b">
+                  <!-- <td class="name"><span style="color:rgba(220,233,255,1)">{{$index-0+1}}</td> -->
+                  <td class="name" style="width: 50%;"><span style="color:rgba(220,233,255,1)">{{item.visitDate |
+                                        date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
+                  <!-- <td class="name"><span style="color:rgba(220,233,255,1)">{{item.visitDate |
+                                        date:'HH:mm'}}
+                                </td> -->
+                  <td class="name" style="width: 50%;">
+                    <div style="color:rgba(220,233,255,1)">{{item.visitor}}</div>
+                  </td>
+                </tr>
+              </table>
+
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</body>
+<script type="text/javascript" src="/res/jquery.min.js"></script>
+<script type="text/javascript" src="/res/angular1.5.11/angular.min.js"></script>
+<script type="text/javascript" src="/res/angular1.5.11/ui-bootstrap-tpls.js"></script>
+<script type="text/javascript" src="/res/layer/layer.js"></script>
+<script type="text/javascript" src="/res/AirocovMap.min.js"></script>
+<script type="text/javascript" src="/res/reconnectingwebsocket/reconnecting-websocket.min.js"></script>
+<script type="text/javascript" src="/res/echarts/dist/echarts.min.js"></script>
+
+<script>
+  var app = angular.module("showApp", ['ui.bootstrap']);
+
+</script>
+<script type="text/javascript" src="/javascripts/showManegeController.js"></script>
+
+</html>
+<style>
+  html {
+    width: 1920px;
+    height: 1080px;
+  }
+
+  body {
+
+    background: url('../pic/intelliDept/bg.png');
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+  }
+
+  .left {
+    flex-grow: 1;
+    flex: 0 0 30%;
+    float: left;
+    height: 100%;
+    margin-left: 20px;
+    margin-top: -128px
+  }
+
+  .right {
+    flex-grow: 1;
+    /* flex: 0 0 30%; */
+    height: 100%;
+    /* margin-left: 20px; */
+    width: 469px;
+    margin-top: -75px;
+    margin: 0 10px;
+  }
+
+  .center {
+    flex-grow: 1;
+    /* flex: 0 0 40%; */
+    height: 100%;
+    width: 890px;
+    margin-left: -107px;
+  }
+
+  .top {
+    height: 15%;
+    position: relative;
+    text-align: center
+  }
+
+  .top img {
+    height: 82px;
+  }
+
+  .top h2 {
+    font-family: MicrosoftYaHei-Bold;
+    font-weight: bold;
+    color: rgba(205, 230, 255, 1);
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 12%;
+    font-size: 32px;
+
+  }
+
+  .time {
+    font-family: 'DINMittelschrift';
+    font-weight: 400;
+    color: rgba(34, 184, 254, 1);
+    text-align: center;
+    height: 32px;
+    font-size: 20px
+  }
+
+  .inline_block {
+    display: inline-block
+  }
+
+  .text-center {
+    text-align: center
+  }
+
+  .weather {
+    height: 124px;
+    vertical-align: middle;
+
+  }
+
+  .weather img {
+    height: 54px;
+    width: 65px;
+    vertical-align: baseline;
+  }
+
+
+
+  .temperature {
+    font-size: 90px;
+    font-weight: 400;
+    color: rgba(180, 214, 255, 1);
+    font-family: UniversUltraCondensedBQ-Regular;
+    margin-left: 30px
+  }
+
+  .c {
+    font-size: 16px;
+    font-weight: 400;
+    color: #B4D6FF;
+    /* opacity: 0.5; */
+    vertical-align: top;
+    margin-top: 12px;
+    display: inline-block;
+    font-style: normal;
+  }
+
+  .wea {
+    font-size: 14px;
+    font-weight: 400;
+    color: #B4D6FF;
+    /* opacity: 0.5; */
+    font-style: normal;
+    vertical-align: text-bottom;
+    margin-left: -15px;
+  }
+
+  .day {
+    width: 48px;
+    height: 17px;
+    font-size: 8px;
+    font-weight: 400;
+    color: rgba(180, 214, 255, 1);
+    line-height: 10px;
+    opacity: 0.8;
+  }
+
+  .air {
+    width: 26px;
+    height: 8px;
+    font-size: 8px;
+
+    font-weight: 400;
+    color: rgba(180, 214, 255, 1);
+    opacity: 0.8;
+  }
+
+  .environment {
+    height: 350px;
+    background: rgba(13, 44, 82, 0.3);
+    width: 460px;
+  }
+
+  .environment h4,
+  .engergy h4,
+  .right_middle h4,
+  .right_bottom h4 {
+    font-family: 'MicrosoftYaHei';
+    font-weight: 400;
+    color: #DCE9FF;
+    text-align: center;
+    line-height: 45px;
+    font-size: 20px
+  }
+
+  .environment .circly {
+    width: 170px;
+    height: 170px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  .pointer {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%)
+  }
+
+  .hj {
+    /* margin: -15px 20px 20px 20px; */
+    background: rgba(13, 44, 82, 0.3);
+    display: flex;
+    /* justify-content: space-around; */
+    height: 148px;
+    margin-top: 5px;
+    width: 460px;
+
+  }
+
+  .hj .w3 {
+    flex-grow: 1;
+    flex: 0 0 33.33%;
+    text-align: center;
+    padding: 30px;
+  }
+
+  .engergy {
+    width: 460px;
+    height: 398px;
+    background: rgba(13, 44, 82, 0.3);
+    margin-top: -5px;
+
+  }
+
+  .activity {
+    height: 310px;
+  }
+
+  .tables {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .table_1 {
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+  }
+
+  .tables .name,
+  .table_1 .name {
+    color: #216EBD;
+    font-size: 16px;
+    /* background: rgba(13,44,82,0.3); */
+    margin: 0px;
+    /* border-bottom: 1px solid #0c0b0b; */
+    padding: 0px 20px;
+    text-align: center;
+    line-height: 46px;
+  }
+
+  .title {
+    font-family: MicrosoftYaHei;
+    font-weight: 400;
+    color: rgba(220, 233, 255, 1);
+    font-size: 20px;
+
+    height: 58px;
+    line-height: 58px;
+    margin: 0;
+    text-align: center;
+
+  }
+
+  .right_top {
+    height: 100px;
+    vertical-align: middle;
+    display: flex;
+    margin-top: -104px
+  }
+
+  .right_top .item {
+    flex-grow: 1;
+    flex: 0 0 33.33%;
+    text-align: center;
+
+  }
+
+  .right_middle,
+  .right_bottom {
+    background: rgba(13, 44, 82, 0.3);
+  }
+
+  .hys,
+  .hys_pm {
+    /* padding: 0 30px; */
+    display: flex;
+    position: relative;
+
+  }
+
+  .hys .item {
+    width: 98px;
+    text-align: center;
+    background: #0D2C52;
+    height: 40px;
+    margin: 0 1px;
+    color: #9AD8FF;
+    line-height: 30px;
+    font-size: 14px;
+
+  }
+
+  .hys_pm .item {
+    width: 78px;
+    text-align: center;
+    background: #0D2C52;
+    height: 40px;
+    margin: 0 1px;
+    color: #9AD8FF;
+    line-height: 30px;
+    font-size: 14px;
+  }
+
+  .rows_name {
+    display: flex;
+    justify-content: space-around;
+    margin-right: 30px;
+    padding: 0 30px;
+  }
+
+  .rows_name .item {
+    flex-grow: 1;
+    text-align: center;
+
+    color: #fff;
+    height: 30px;
+    line-height: 30px
+  }
+
+  .toilet {
+    display: flex;
+
+
+  }
+
+  .toilet .left {
+    flex-grow: 1;
+    flex: 0 0 30%;
+    text-align: center;
+
+  }
+
+  .toilet .right {
+    flex-grow: 1;
+    flex: 0 0 70%;
+  }
+
+  .toilet .inline_num {
+    background: rgba(13, 44, 82, 0.5);
+    width: 103px;
+    height: 89px;
+    display: inline-block;
+    margin: 0 25px;
+  }
+
+  .toilet .inline_num .num_top {
+    font-size: 40px;
+    font-family: UniversUltraCondensedBQ-Regular;
+    font-weight: 400;
+    color: rgba(127, 175, 255, 1);
+    text-align: center;
+  }
+
+  .toilet .inline_num .num_bottom {
+    font-size: 14px;
+    font-family: MicrosoftYaHei;
+    font-weight: 400;
+    color: rgba(127, 175, 255, 1);
+    text-align: center;
+  }
+
+  .r-b-1 {
+    position: relative;
+
+    width: 708px;
+    height: 200px;
+  }
+
+  .r-b-2 {
+    position: relative;
+    width: 100%;
+    height: 15px;
+    text-align: center;
+
+    margin-bottom: 9px;
+    margin-top: -10px;
+
+  }
+
+
+
+
+
+  .active-c {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s;
+  }
+
+  .active-d div {
+
+    margin: 3px 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 3px;
+    transition: all 0.3s;
+  }
+
+  .a-c-1 {
+    left: -875px;
+    opacity: 0;
+
+  }
+
+  .overtext {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .a-c0 {
+    opacity: 1;
+    left: 0;
+  }
+
+  .a-c1 {
+    left: 738px;
+    opacity: 0;
+
+  }
+
+  .b-c0 {
+    background: rgba(99, 206, 250, 1);
+  }
+
+  .b-c1 {
+    background: rgba(99, 206, 250, .3);
+
+  }
+
+  .active-c>div {
+    height: 210px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .active-c>div>p {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(105, 161, 255, 1);
+    margin-left: 54px;
+
+  }
+
+  #parking-msg-c::-webkit-scrollbar {
+    display: none;
+  }
+
+  #visitor-msg-c::-webkit-scrollbar {
+    display: none;
+  }
+
+  .m-t-cover {
+    position: absolute;
+    height: 30px;
+    top: 0;
+    box-sizing: border-box;
+    padding: 0 1px;
+    /*width: 90px;*/
+    /*left: 216px;*/
+    z-index: 10000;
+
+
+
+  }
+
+  .m-t-cover>div {
+    width: 100%;
+    background: linear-gradient(0deg, rgba(7, 157, 120, .8) 0%, rgba(19, 215, 180, .8) 100%);
+    /* background: red; */
+    height: 40px;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    line-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ydDiv {
+    margin: 0 47px
+  }
+
+  .bp-0 {
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(206, 224, 255, 1);
+  }
+
+  .wys-o {
+    width: 597px;
+    height: 37px;
+    margin-left: 160px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 10px;
+  }
+
+  .wys {
+    font-size: 26px;
+    font-weight: 400;
+    color: rgba(241, 159, 0, 1);
+    white-space: nowrap;
+    position: absolute;
+    left: 200px;
+    top: 0;
+    animation: zyy 20s linear infinite;
+  }
+
+  @keyframes zyy {
+    0% {
+      left: 300px
+    }
+
+    100% {
+      left: -1759px;
+    }
+  }
+
+  .lkj {
+    width: 585px;
+    margin-left: 166px;
+    margin-top: 20px;
+    overflow: hidden;
+    height: 233px;
+  }
+
+  .lkj-i {
+    display: flex;
+    flex-direction: row;
+    width: 585px;
+    position: relative;
+
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    justify-content: center;
+    transition: all .3s;
+  }
+
+  .l-i-1 {
+    left: -585px;
+    opacity: 0;
+  }
+
+  .l-i0 {
+    left: 0;
+    opacity: 1;
+
+  }
+
+  .l-i1 {
+    left: 585px;
+    opacity: 0;
+  }
+
+  .lkj-0 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    transition: all .3s;
+  }
+
+
+  .lkj-0-ss {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 50px;
+  }
+
+  .lkj-0-ss:first-child {
+    margin-left: 0;
+
+  }
+
+  .lkj-00 {
+    left: 0;
+    opacity: 1;
+
+  }
+
+  .lkj-01 {
+    left: 210px;
+    opacity: 1;
+
+  }
+
+  .lkj-02 {
+    left: 420px;
+    opacity: 1;
+
+  }
+
+  .lkj-03 {
+    left: 630px;
+    opacity: 0;
+
+  }
+
+  .lkj-0-1 {
+    left: -210px;
+    opacity: 0;
+
+  }
+
+
+
+  .l-0-1 {
+    width: 160px;
+    height: 160px;
+    background: rgba(255, 255, 255, .2);
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .l-pic-t {
+    position: absolute;
+    width: 33px;
+    height: 33px;
+    background: rgba(241, 159, 0, 1);
+    border-radius: 50%;
+    top: 10px;
+    right: 10px;
+  }
+
+  .l-pic {
+    width: 136px;
+    height: 136px;
+    border-radius: 50%;
+    margin-left: 12px;
+    margin-top: 12px;
+    background: #ccc;
+    overflow: hidden;
+  }
+
+  .l-0-2 {
+    font-size: 18px;
+    font-family: MicrosoftYaHei;
+    font-weight: 400;
+    color: rgba(201, 237, 255, 1);
+    margin-top: 14px;
+  }
+
+  .l-0-3 {
+    font-size: 14px;
+    font-family: MicrosoftYaHei;
+    font-weight: 400;
+    color: rgba(58, 186, 252, 1);
+    margin-top: 4px;
+  }
+
+  .l-pic-t-img {
+    width: 20px;
+    height: 23px;
+    margin-left: 7px;
+    margin-top: 4px;
+  }
+</style>

@@ -1,0 +1,14 @@
+<ul ng-if="nodeList.length">
+    <li ng-repeat="node in nodeList" style="position: relative;" ng-class="{'active':node.expanded||node.selected}" >
+        <a href="javascript:void(0);" alt=""  class="form-inline " ng-click="$parent.selectMenu(node)"  >
+            <i class="fa {{node.icon||'fa-cube'}}" ng-class="{hidden:pnode}" ></i>
+            <span url="{{node.url}}" class="menu_text" >{{node.text}}</span>
+            <span class="pull-right text-muted menu_text" ng-if="node.nodes.length" style="margin-right: 20px">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+        </a>
+        <tree-menu  node-list ="node.nodes" config="config" pnode="node" ng-class="{'sub_menu':node.expanded}" ></tree-menu>
+    </li>
+
+</ul>

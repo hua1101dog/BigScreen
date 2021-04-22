@@ -1,0 +1,101 @@
+<div style="display: table;width: 100%" >
+    <div style="width:160px;display: table-cell;">
+        <uib-tabset vertical="true">
+            <!--select="showTab(dict)"-->
+            <uib-tab heading="{{category[1]}}" ng-repeat="category in categoryDict" >
+                <ul class="leftList" id="schemeTypeScroll">
+                    <li ng-repeat="type in typeList|filter:{category:category[0]}" style="position: relative">
+                        <form novalidate name="form">
+                            <button  ng-click="selectType(type)" class="btn btn-default nameBtn"
+                                     ng-class="{'btn-success':type == curType,'active':type == curType}" >{{type.name}}</button>
+                            <div class="absDiv hoverShow" >
+                                <button  class="btn btn-default roundBtn" ng-click="editType(type)" title="编辑"><i class="glyphicon glyphicon-pencil"></i></button>
+                                <button  class="btn btn-danger roundBtn" ng-click="delType(type)" title="删除"><i class="glyphicon glyphicon-remove"></i></button>
+                            </div>
+                        </form>
+                    </li>
+                    <li >
+                        <button class="btn btn-primary roundBtn" style="margin-left: 45px" ng-click="editType(null,category)"><i class="glyphicon glyphicon-plus"></i></button>
+                    </li>
+                </ul>
+            </uib-tab>
+        </uib-tabset>
+
+        <!--style="overflow-y: auto;overflow-x: hidden"-->
+        <!--<ul class="leftList" id="folderScroll">
+            <li ng-repeat="type in typeList" style="position: relative">
+                <form novalidate name="form">
+                    <button ng-show="!type.edit" ng-click="selectType(type)" class="btn btn-default nameBtn" ng-class="{'btn-success':type == curType,'active':type == curType}" >{{type.name}}</button>
+                    <input ng-show="type.edit" uib-tooltip="{{!type.textCopy?'不可为空':(form.textCopy.$invalid?'有重名':null)}}"
+                           ensure-unique="iconType"
+                           type="text" ng-model="type.textCopy" name="textCopy" class="form-control" required style="margin-bottom: 5px;"/>
+                    <div class="absDiv hoverShow" ng-if="$root.hasPower('编辑方案分类')">
+                        <button  class="btn btn-default roundBtn" ng-click="editType(type)" title="编辑"><i class="glyphicon glyphicon-pencil"></i></button>
+                        <button  class="btn btn-danger roundBtn" ng-click="delType(type)" title="删除"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                </form>
+            </li>
+            <li  ng-if="$root.hasPower('编辑方案分类')">
+                <button class="btn btn-primary roundBtn" style="margin-left: 45px;" ng-click="editType()"><i class="glyphicon glyphicon-plus"></i></button>
+            </li>
+        </ul>-->
+    </div>
+    <div  >
+        <div class="x_panel" >
+            <div class="form-inline">
+                <div class="form-group">
+                    <label>空间 </label>
+                    <div style="display: inline-block;width: 200px">
+                        <tree-selector  node-list="$root.spaceTree" host="search" host-key="'spaceCode'" host-text="'spaceName'"  tip-text="'空间选择'"></tree-selector>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>名称 </label>
+                    <input type="text" ng-model="search.name"  class="form-control" />
+                </div>
+                <button class="btn btn-primary" ng-click="find(1)" >查询</button>
+                <button class="btn btn-default" ng-click="search.name=''" >重置</button>
+
+                <button class="btn btn-danger pull-right mr10"  ng-if="$root.hasPower('编辑方案')" ng-disabled="!hasChecked(iconTypes[0].pageModel.data) && !hasChecked(iconTypes[1].pageModel.data)" ng-click="delAll()">批量删除</button>
+                <button class="btn btn-primary pull-right mr10" ng-if="$root.hasPower('编辑方案')" ng-click="editScheme({'schemeType':curType._id})" >添加</button>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover" >
+            <thead class="title">
+            <tr>
+                <th class="text-center">NO</th>
+                <th th-check items="pageModel.data" class="text-center" style="width:20px"></th>
+                <th>名称</th>
+                <th>空间</th>
+                <th>地图</th>
+                <th>标签</th>
+                <th>创建时间</th>
+                <th style="width:120px" ng-if="$root.hasPower('编辑地图')">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-if="pageModel.data.length == 0">
+                <td colspan="100" class="text-center">暂无记录</td>
+            </tr>
+            <tr ng-repeat="item in pageModel.data">
+                <td class="text-center">{{$index + 1+pageModel.pageSize*pageModel.pageIndex}}</td>
+                <td td-check item="item"></td>
+                <td>{{item.name}}</td>
+                <td>{{item.spaceCode|keyToValue:$root.flatSpaceTree:'code':'text'}}</td>
+                <td>{{item.birdMap.name}}</td>
+                <td>{{item.tag}}</td>
+                <td>{{item.createTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td ng-if="$root.hasPower('编辑地图')">
+                    <span ng-click='del(item)' class='btn btn-xs btn-link'><span class='fa fa-trash'></span>删除</span>
+                    <span ng-click='editScheme(item)' class='btn btn-xs btn-link'><span class='fa fa-edit'></span>编辑</span>
+                    <span ng-click='copyScheme(item)' class='btn btn-xs btn-link'><span class='fa fa-copy'></span>复制</span>
+                    <span ng-click='showMapDetail({schemeId:item._id})' class='btn btn-xs btn-link'><span class='fa fa-map-marker'></span>查看</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="page-footer clearfix" >
+            <page page-model="pageModel"></page>
+        </div>
+    </div>
+</div>

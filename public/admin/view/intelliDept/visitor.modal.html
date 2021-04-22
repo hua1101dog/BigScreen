@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{item._id?'编辑':'添加'}}接口前缀</h4>
+</div>
+<div class="modal-body container-fluid form-horizontal">
+    <form name="form" novalidate>
+        <div class="form-group">
+            <label class="col-xs-4 control-label required">接待时间：</label>
+            <div class="col-xs-6">
+                <input type="datetime" class="form-control Wdate" ng-model="item.visitDate" onchange=""
+                               onclick="javascript:WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-%d HH:mm'})" required/>
+            </div>
+        </div>
+       
+        <div class="form-group">
+            <label class="col-xs-4 control-label required">接待方：</label>
+            <div class="col-xs-6">
+                <input type="text" class="form-control" ng-model="item.visitor" name="visitor" required/>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form,item)">确定</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>
+

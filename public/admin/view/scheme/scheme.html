@@ -1,0 +1,7 @@
+<div ng-controller="schemeCtrl">
+    <div style="position: relative">
+        <img src="images/refuse.png" class="hand close" id="closePopPhoto" style="top:0;right:0;position:absolute" ng-show="pconfig.showMap" ng-click="hideMap()"></img>
+    </div>
+    <scheme-list config="pconfig" show-map-detail="showMapDetail(schemeId)" ng-show="!pconfig.showMap"></scheme-list>
+    <scheme-detail scheme-id="pconfig.schemeId"  ng-show="pconfig.showMap"></scheme-detail>
+</div>

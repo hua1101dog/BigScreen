@@ -1,0 +1,51 @@
+<div class="modal-body container-fluid " style="padding-bottom: 0px">
+    <img src="images/refuse.png" role="button" style="top:5px;right:5px;position:absolute;z-index: 1" ng-click="$dismiss()"></img>
+            <div class="x_panel" >
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>名称 </label>
+                        <input type="text" ng-model="search.name"  class="form-control" />
+                    </div>
+                    <button class="btn btn-default" ng-click="find(1)" >查询</button>
+                </div>
+            </div>
+    <p ng-if="pageModel.data.length == 0" class="text-center">暂无图标</td></p>
+    <div class="clearfix" style="height: 500px;overflow-y: auto">
+        <div class="photoWraper"  ng-repeat="item in pageModel.data">
+            <div ng-click="showPhoto(item.path)">
+                <img onerror="javascript:this.src='images/detail.png';"
+                     ng-src="{{processImgUrl(item.path,'min')}}" >
+            </div>
+            <label role="button" uib-tooltip="{{item.name}}" ng-style="{'background-color':$parent.curIcon == item?'#5bc0de':'dark'}" style="word-break: break-all;" ng-click="$parent.curIcon = item">
+                {{item.name}}</label>
+        </div>
+    </div>
+    <div class="clearfix" >
+        <ng-include src="'common/pager.html'"></ng-include>
+    </div>
+
+            <!--<div class="panel panel-default">
+                <div class="panel-heading">选择图标
+                </div>
+                <div class="panel-body" >
+
+                </div>
+            </div>-->
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-disabled="!curIcon" ng-click="save(curIcon)">确定</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>
+<style>
+    .nameBtn{
+        width: 140px;
+        margin-bottom: 5px;
+        position: relative;
+        white-space:normal;
+        word-break: break-word;
+    }
+    .nameBtn.active{
+        box-shadow: inset 0 3px 5px rgba(0,0,0,.5)
+    }
+</style>

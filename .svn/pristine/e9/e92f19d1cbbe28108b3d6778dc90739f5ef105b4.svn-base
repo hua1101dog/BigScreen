@@ -1,0 +1,47 @@
+{
+  "_from": "reconnectingwebsocket",
+  "_id": "reconnectingwebsocket@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha1-C4Jbq7N7ZwRFxlqn0+2XgwAgVEQ=",
+  "_location": "/reconnectingwebsocket",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "reconnectingwebsocket",
+    "name": "reconnectingwebsocket",
+    "escapedName": "reconnectingwebsocket",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/reconnectingwebsocket/download/reconnectingwebsocket-1.0.0.tgz",
+  "_shasum": "0b825babb37b670445c65aa7d3ed978300205444",
+  "_spec": "reconnectingwebsocket",
+  "_where": "D:\\WebstormProjects\\BigScreen\\public\\res",
+  "author": {
+    "name": "arnauddri"
+  },
+  "bugs": {
+    "url": "https://github.com/joewalnes/reconnecting-websocket/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A small JavaScript library that decorates the WebSocket API to provide a WebSocket connection that will automatically reconnect if the connection is dropped.",
+  "homepage": "https://github.com/joewalnes/reconnecting-websocket",
+  "license": "MIT",
+  "main": "reconnecting-websocket.js",
+  "name": "reconnectingwebsocket",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joewalnes/reconnecting-websocket.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}

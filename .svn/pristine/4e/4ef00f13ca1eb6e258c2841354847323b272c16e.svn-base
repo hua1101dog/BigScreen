@@ -1,0 +1,24 @@
+{
+  "python_ip":"",
+  "python_ip_test":"http://172.16.125.116:5000 http://101.200.176.230:5000",
+  "tip1":"python_ip为python服务的地址,正式环境ex:(http://earl-svr07.bj.intel.com:5000),测试环境ex:(http://earl-svr07.bj.intel.com:3000),3000是web服务的端口",
+  "mongodb_ip_test":"mongodb://fengAdmin:123465@47.98.171.192/dev",
+  "mongodb_ip":"mongodb://fengAdmin:123465@127.0.0.1/feng",
+  "tip2":"mongodb_ip为mongodb的服务地址,ex:(mongodb://earl-svr07.bj.intel.com/test),若发布机器与mongodb服务器相同时,可以设为(mongodb://localhost/test)",
+  "dicts":{
+    "wsUrl":"ws://bigscreen.ovuems.com",
+    "wsUrlx":"ws://localhost:3000",
+    "yesNoDict": [[0, "否"],[1, "是"]]
+   ,"categoryDict":[[1, "智能化设备配置"],[2, "运营场景"]]
+   , "markerTypeDict":[["text", "文字"],["point", "描点"],["path", "划线"],["fence", "围栏"],["event","点击事件"]]
+  },
+  "menus":[
+    {"text":"图标管理","url":"icon/icon"},
+    {"text":"地图管理","url":"space/map"},
+    {"text":"方案管理","url":"scheme/scheme"},
+    {"text":"大屏菜单","url":"localApi/localApi"},
+    {"text":"大屏地址","url":"bigScreenPath/bigScreenPath"},
+    {"text":"智慧园区事业部","nodes":[{"text":"外勤录入","url":"intelliDept/outwork"},{"text":"项目节点","url":"intelliDept/project"},{"text":"6楼接待","url":"intelliDept/visitor"}]},
+    {"text":"接口管理","nodes":[{"text":"接口前缀","url":"interface/urlPrefix"},{"text":"接口列表","url":"interface/interface"},{"text":"报表模板","url":"interface/dataTree"},{"text":"报表实例","url":"interface/instance"}]}]
+
+}

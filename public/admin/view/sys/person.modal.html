@@ -1,0 +1,49 @@
+	<div class="modal-header">
+        <h3 class="modal-title">{{(item.id?'修改':'新增')}}操作人员</h3>
+    </div>
+    <form name="form" novalidate>
+    <div class="modal-body form-horizontal container-fluid">
+    	<div class="form-group">
+			<label class="col-xs-2 control-label">姓名：</label>
+			<div class="col-xs-4" >
+				<input  type="text" ng-model="item.name" class="form-control" placeholder=""  required ng-minlength="2" ng-maxlength="50"  >
+			</div>
+			<label class="col-xs-2 control-label" >性别：</label>
+			<div class="col-xs-4">
+				<select class="form-control" required  ng-model="item.sex" ng-options="o.id as o.val for o in sex" >
+					<option value="">--请选择--</option>
+				</select>
+			</div>
+		</div>
+    	<div class="form-group">
+			<label class="col-xs-2 control-label">籍贯：</label>
+			<div class="col-xs-4" >
+					<input  type="text" ng-model="item.nativePlace" class="form-control"  required ng-minlength="2" ng-maxlength="50"  >
+			</div>
+			<label class="col-xs-2 control-label">联系电话：</label>
+			<div class="col-xs-4" >
+				<input  type="text" ng-model="item.phone" class="form-control" placeholder=""     >
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-2 control-label">身份证号：</label>
+			<div class="col-xs-4" >
+					<input  type="text" ng-model="item.idno" class="form-control"placeholder=""     >
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-2 control-label" >地址：</label>
+			<div class="col-xs-4" >
+					<input  type="text" ng-model="item.address" class="form-control" placeholder=""    >
+			</div>
+		</div>
+	</div>
+     </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="save(form)">确认</button>
+        <button class="btn btn-warning" type="button" ng-click="$dismiss()">取消</button>
+    </div>
+  
+	
+		
+		

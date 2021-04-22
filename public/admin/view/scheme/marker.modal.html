@@ -1,0 +1,103 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{item.id?'编辑':'添加'}}描点</h4>
+</div>
+<div class="modal-body container-fluid form-horizontal">
+    <form name="form" novalidate>
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">名称：</label>
+            <div class="col-xs-6">
+                <input type="text" class="form-control" ng-model="item.name" name="name" required/>
+            </div>
+        </div>
+        <div class="form-group" ng-if="item.lnglat">
+            <label class="col-xs-2 control-label">经纬度：</label>
+            <div class="col-xs-10">
+                <input type="text" readonly class="form-control" ng-model="item.lnglat" name="lnglat" />
+            </div>
+        </div>
+        <div class="form-group" ng-if="markType.isLight">
+            <label class="col-xs-2 control-label required">照明线路：</label>
+            <div class="col-xs-4">
+                <input type="number" placeholder="线路编号" class="form-control" ng-model="item.circuitry"  required/>
+            </div>
+        </div>
+        <div class="form-group" ng-if="markType.hasSector">
+            <label class="col-xs-2 control-label required">半径：</label>
+            <div class="col-xs-2">
+                <input type="number" placeholder="1~100" class="form-control" ng-model="item.radius" name="radius"/>
+            </div>
+            <label class="col-xs-2 control-label">偏转角：</label>
+            <div class="col-xs-2">
+                <input type="number" placeholder="0~360" class="form-control" ng-model="item.direction" name="direction" />
+            </div>
+            <label class="col-xs-2 control-label">扫描角度：</label>
+            <div class="col-xs-2">
+                <input type="number" placeholder="0~360" class="form-control" ng-model="item.arc" name="arc" />
+            </div>
+        </div>
+        <div class="form-group" ng-if="markType.type =='event' ">
+            <label class="col-xs-2 control-label">目标类型：</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" ng-model="item.targetType" readonly />
+            </div>
+            <label class="col-xs-2 control-label">目标id：</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" ng-model="item.targetId" readonly />
+            </div>
+            <label class="col-xs-2 control-label">介绍图：</label>
+            <div class="col-xs-6">
+                <div class="photoWraper"  ng-repeat="icon in item.icons">
+                    <div ng-click="showPhoto(icon.url)">
+                        <img ng-src="{{icon.url}}" >
+                    </div>
+                    <label> {{icon.name}}</label>
+                </div>
+                <div class="photoWraper"> <span class="fa fa-edit"  style="cursor: pointer;line-height:70px;font-size:38px;vertical-align: middle" ng-click="selectIcon(item)"></span></div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="markType.type =='fence' ">
+            <label class="col-xs-2 control-label">围栏颜色：</label>
+            <div class="col-xs-4">
+                <span color-edit host="item" key="'color'" need=false ></span>
+            </div>
+            <label class="col-xs-2 control-label">透明度：</label>
+            <div class="col-xs-4">
+                <input type="number" placeholder="0~1" class="form-control" ng-model="item.opacity" />
+            </div>
+            <label class="col-xs-2 control-label">介绍图：</label>
+            <div class="col-xs-6">
+                <div class="photoWraper"  ng-repeat="icon in item.icons">
+                    <div ng-click="showPhoto(icon.url)">
+                        <img ng-src="{{icon.url}}" >
+                    </div>
+                    <label> {{icon.name}}</label>
+                </div>
+                <div class="photoWraper"> <span class="fa fa-edit"  style="cursor: pointer;line-height:70px;font-size:38px;vertical-align: middle" ng-click="selectIcon(item)"></span></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">传感器mac：</label>
+            <div class="col-xs-6">
+                <input type="text" class="form-control" ng-model="item.mac" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">摄像头编码：</label>
+            <div class="col-xs-6">
+                <input type="text" class="form-control" ng-model="item.cameraCode" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label ">内容：</label>
+            <div class="col-xs-10">
+                <div class="ueditor" ng-model="item.content" ></div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form,item)">确定</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>
+
+

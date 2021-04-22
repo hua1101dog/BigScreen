@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{item.id?'编辑':'添加'}}社区</h4>
+</div>
+    <div class="modal-body form-horizontal">
+        <form name="form" novalidate>
+            <div class="form-group">
+                <label class="col-sm-2 control-label required">社区名称：</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-model="item.name" class="form-control" placeholder="2~20 字符!"
+                           required ng-minlength="2" ng-maxlength="20"
+                           uib-tooltip="{{item.name && form.name.$invalid?'有重名':null}}" id="{{item.id}}"
+                           ensure-unique="name" api="../sys/communityUniqueName_mute"
+                           popover-placement="top" popover-trigger="mouseenter">
+                </div>
+            </div>
+        </form>
+    </div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form)">确认</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>

@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{item._id?'编辑':'添加'}}方案</h4>
+</div>
+<div class="modal-body container-fluid form-horizontal">
+    <form name="form" novalidate>
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">名称：</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" ng-model="item.name" name="name"
+                       uib-tooltip="{{!item.name?'不可为空':(form.name.$invalid?'有重名':null)}}" ensure-unique="schemeTypeName" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">方案类型：</label>
+            <div class="col-xs-4">
+                <select  class="form-control" ng-model="item.schemeType"
+                         ng-options="o._id as o.name for o in schemeTypeList">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+            <label class="col-xs-2 control-label required">标签：</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" ng-model="item.tag" placeholder="低配、高配、自用···" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">地图：</label>
+            <div class="col-xs-4">
+                <tree-selector  node-list="spaceTree" need=true host="item" host-key="'spaceCode'" host-text="'spaceName'"
+                                callback="resetMap"
+                                tip-text="'空间选择'"></tree-selector>
+            </div>
+            <div class="col-xs-4">
+                <input type="text" ng-model="temp" placeholder="--地图名称--"
+                       uib-typeahead="o as o.name for o in findMap(item.spaceCode,$viewValue)"
+                       class="form-control" required
+                       typeahead-show-hint="true" typeahead-min-length="0">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">方案介绍：</label>
+            <button class="btn btn-sm btn-default" ng-click="item.policyList.push({})"><i class="glyphicon glyphicon-plus" ></i>添加说明</button>
+        </div>
+        <div class="well row" style="margin-bottom: -20px">
+            <div ng-repeat="it in item.policyList track by $index" class="form-group" style="margin-bottom: 5px">
+                <div class="col-xs-2">
+                    <input type="text" class="form-control" ng-model="it.title" required placeholder="--标题--"> </input>
+                </div>
+                <div class="col-xs-9">
+                    <div class="ueditor" ng-model="it.content" required></div>
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-sm btn-default"
+                            ng-click="item.policyList.splice(item.policyList.indexOf(it),1)"><i class="glyphicon glyphicon-minus"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form,item)">确定</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>
+
+

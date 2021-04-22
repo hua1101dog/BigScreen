@@ -1,0 +1,52 @@
+<div class="modal-header">
+	<h4 class="modal-title">{{item.copy?'复制':'编辑'}}角色</h4>
+</div>
+<div class="modal-body form-horizontal">
+		   <form name="form" novalidate>
+			<div  class="form-group col-sm-12">
+				<label class="col-sm-2 control-label required">名称：</label>
+				<div class="col-sm-4">
+					<input  type="text" ng-model="role.name" class="form-control" placeholder=""
+                     required ng-minlength="2" ng-maxlength="20" uib-tooltip="2~20 characters!" popover-placement="top" popover-trigger="mouseenter" >
+				</div>
+			</div>
+			   <div class="form-group">
+				   <label class="col-sm-2 control-label ">备注：</label>
+				   <div class="col-sm-10">
+					   <input type="text"  ng-model="item.comment" class="form-control">
+				   </div>
+			   </div>
+			</form>
+			<table class="table table-bordered table-striped table-hover">
+				 <thead ><td colspan="2">功能</td>
+                 <td>权限</td>
+                 <td class="nowrap">全选</td>
+                 </thead>
+			<tbody  >
+			 <tr ng-repeat-start="menu in allMenus" ng-if="!menu.nodes ||menu.nodes.length == 0 ">
+			 	<td class="nowrap"><b>{{menu.text}}</b></td>
+				 <td></td>
+                 <td>
+                 	   <span ng-repeat="ac in menu.powerList" class="mr15 btn-link" ng-click="toggleAccess(menu.accessList,ac)" ><i class="glyphicon" ng-class="getCheckClass(menu.accessList,ac)" ></i>{{ac}}</span>
+                 </td>
+                 <td >
+                 <i class="glyphicon glyphicon-th" role="button" ng-click="checkAll(menu)" ng-if="menu.powerList.length"   > </i>
+                 </td>
+             </tr>
+				<tr ng-repeat-end ng-repeat="item in menu.nodes" ng-if="menu.nodes.length>0">
+					<td rowspan="{{menu.nodes.length}}" ng-if="$index == 0"><b>{{menu.text}}</b></td>
+					 <td class="nowrap">{{item.text}}</td>
+	                 <td >
+	                      <span ng-repeat="ac in item.powerList" class="mr15 btn-link" ng-click="toggleAccess(item.accessList,ac)" ><i class="glyphicon" ng-class="getCheckClass(item.accessList,ac)" ></i>{{ac}}</span>
+	                 </td>
+	                 <td >
+	                    <i class="glyphicon glyphicon-th " role="button"  ng-click="checkAll(item)" ng-if="item.powerList.length>0"  > </i>
+	                 </td>
+                 </tr>
+			</tbody>
+		</table>
+		</div>
+		<div class="modal-footer" >
+		    <button class="btn btn-primary" ng-click="save(form)">确认</button>
+			<button class="btn btn-warning"ng-click="$dismiss()">取消</button>
+    	</div>

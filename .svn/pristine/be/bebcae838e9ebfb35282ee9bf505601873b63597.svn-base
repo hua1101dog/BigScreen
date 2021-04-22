@@ -1,0 +1,80 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{item.id?'编辑':'添加'}}方案分类</h4>
+</div>
+<div class="modal-body container-fluid form-horizontal">
+    <form name="form" novalidate>
+
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">分类名称：</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" ng-model="item.name" name="name"
+                       required/>
+                <!-- uib-tooltip="{{!item.name?'不可为空':(form.name.$invalid?'有重名':null)}}" ensure-unique="schemeTypeName"-->
+            </div>
+            <label class="col-xs-2 control-label required">组别：</label>
+            <div class="col-xs-4">
+                <select  class="form-control" ng-model="item.category"
+                         ng-options="o[0] as o[1] for o in categoryDict">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label">图标字体：</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" ng-model="item.iconfont" name="iconfont" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">覆盖物：</label>
+        </div>
+        <div  ng-repeat="markType in markerTypeDict">
+            <div class="form-group">
+                <label class="col-xs-2 control-label">
+                    <input type="checkbox"  ng-model="markType.chosen" ng-true-value=true ng-false-value=false>{{markType[1]}}
+                </label>
+                <div class="col-xs-10" ng-if="markType.chosen && ['text','event'].indexOf(markType[0])==-1 " >
+                    <div class="photoWraper"  ng-repeat="icon in markType.icons">
+                        <div ng-click="showPhoto(icon.url)">
+                            <img ng-src="{{icon.url}}" >
+                        </div>
+                        <label> {{icon.name}}</label>
+                    </div>
+                    <div class="photoWraper"> <span class="fa fa-edit"  style="cursor: pointer;line-height:70px;font-size:38px;vertical-align: middle" ng-click="selectIcon(markType)"></span></div>
+                </div>
+            </div>
+            <div class="well" ng-if="markType[0] == 'point' && markType.chosen">
+                <div class="form-group"  >
+                    <label class="col-xs-2 control-label" uib-tooltip="覆盖物为灯具时，第二张图片为线路颜色，无第二图片时无线路！">
+                        <input type="checkbox"  ng-model="markType.isLight" ng-true-value=true ng-false-value=false>是否灯具
+                    </label>
+                </div>
+                <div class="form-group" >
+                    <label class="col-xs-2 control-label">
+                        <input type="checkbox"  ng-model="markType.hasSector" ng-true-value=true ng-false-value=false>扇形
+                    </label>
+                    <div ng-if="markType.hasSector">
+                        <label class="col-xs-1 control-label required">半径：</label>
+                        <div class="col-xs-2">
+                            <input type="number" placeholder="1~100" class="form-control" ng-model="markType.radius" name="radius" required/>
+                        </div>
+                        <label class="col-xs-1 control-label required">偏转角：</label>
+                        <div class="col-xs-2">
+                            <input type="number" placeholder="0~360" class="form-control" ng-model="markType.direction" name="direction" required/>
+                        </div>
+                        <label class="col-xs-1 control-label required">扫描角度：</label>
+                        <div class="col-xs-2">
+                            <input type="number" placeholder="0~360" class="form-control" ng-model="markType.arc" name="arc" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form,item)">确定</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>
+
+

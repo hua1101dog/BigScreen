@@ -1,0 +1,27 @@
+<div class="modal-header">
+	<a class="close" ng-click="$dismiss()">×</a>
+	<h4 class="modal-title">用户信息显示</h4>
+</div>
+<div class="modal-body container-fluid form-horizontal" style="font-size:14px">
+    <div class="form-group" >
+        <label class="col-xs-3 control-label ">名称：</label>
+        <div class="col-xs-8 mt7">
+           <span>{{name | notNull}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-3 control-label ">账号：</label>
+        <div class="col-xs-8 mt7">
+            <span>{{account}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-3 control-label ">联系方式：</label>
+        <div class="col-xs-8 mt7">
+            <span>{{phone | notNull}}</span>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="$dismiss()">关闭</button>
+</div>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	    <meta name="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,shrink-to-fit=no">
+    <meta name="MobileOptimized" content="320">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="x5-page-mode" content="no-title">
+    <title>智慧园区服务部署清单</title>
+
+    <link href="/res/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <table class="table table-bordered table-striped table-hover">
+            <caption>智慧园区服务部署清单</caption>
+            <thead>
+            <tr>
+                <th rowspan="2">环境</th>  <th rowspan="2">访问主页</th>   <th rowspan="2">服务器ip</th>
+                <th colspan="3">详情</th>
+            </tr>
+            <tr> <th>应用</th><th> 路径</th>   <th>端口</th> </tr>
+            </thead>
+            <tfoot><tr><td class="text-right" colspan="6">更新时间：2019-03-05 16:50</td></tr>
+            </tfoot>
+            <tbody>
+                <template v-for="item in serverList">
+                    <tr >
+                        <td v-bind:rowspan="item.details.length+1">{{item.name}}</td>
+                        <td v-bind:rowspan="item.details.length+1">{{item.url}}</td>
+                        <td v-bind:rowspan="item.details.length+1">{{item.ip}}</td>
+                    </tr>
+                    <tr v-for="sub in item.details">
+                        <td>
+                            {{sub.app}}
+                        </td>
+                        <td>
+                            {{sub.path}}
+                        </td>
+                        <td>
+                            {{sub.port}}
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</body>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<!-- 生产环境版本，优化了尺寸和速度 -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            serverList: [
+                {
+                name: 'beta',
+                url: "http://beta.ovuems.com",
+                ip: '47.96.87.173',
+                details: [
+                          {app: 'ovu-front', path: '/work/ems-release/ovu-front', port: 'ems前端工程'},
+                          {app: 'ovu-park-web', path: '/work/ems-release/ovu-park-web', port: '园区通前端工程'},
+                          {app: 'ovu-park-wx', path: '/work/ems-release/ovu-park-wx', port: '园区通微信前端'},
+                          {app: 'provider_base', path: '/work/ems-release/provider-apache-tomcat-8.5.30', port: '3008'}, 
+                          {app: 'ovu-base',path: '/work/ems-release/base-apache-tomcat-8.5.30',port: '3002'}, 
+                          {app: 'ovu-pcos', path: '/work/ems-release/pcos-apache-tomcat-8.5.30', port: '3005'}, 
+                          {app: 'ovu-energy', path: '/work/ems-release/energy-apache-tomcat-8.5.30', port: '3011'}, 
+                          {app: 'ovu-gallery', path: '/work/ems-release/gallery-apache-tomcat-8.5.30', port: '3020'}, 
+                          {app: 'ovu-hotel', path: '/work/ems-release/hotel-apache-tomcat-8.5.30', port: '3017'}, 
+                          {app: 'ovu-park', path: '/work/ems-release/park-apache-tomcat-8.5.30', port: '3026'}, 
+                          {app: 'middleware', path: '/work/ems-beta/middleware-tomcat-8.5.30', port: '2048'}
+                         ]
+                },
+                {
+                name: 'portal',
+                url: "http://www.ovuems.com",
+                ip: '120.27.216.10',
+                details: [
+                          {app: 'ovu-front', path: '/work/ems-portal-new/ovu-front', port: 'ems前端工程'},
+                          {app: 'provider_base', path: '/work/ems-portal-new/provider-tomcat-8.5.30', port: '3008'}, 
+                          {app: 'ovu-base',path: '/work/ems-release/base-apache-tomcat-8.5.30',port: '3002'}, 
+                          {app: 'ovu-pcos', path: '/work/ems-release/pcos-apache-tomcat-8.5.30', port: '3005'}, 
+                          {app: 'ovu-energy', path: '/work/ems-release/energy-apache-tomcat-8.5.30', port: '3030'}, 
+                          {app: 'nginx', path: '/work/software/nginxForEMS', port: '80/3000'}, 
+                          {app: 'redis', path: '/work/software/redis-4.0.2', port: '6379'}, 
+                          {app: 'zookeeper', path: '/work/software/zookeeper-3.4.10', port: '3026'}
+                         ]
+                }]
+        }
+    })
+</script>
+</html>

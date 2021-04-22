@@ -1,0 +1,42 @@
+<div ng-controller="operationCtrl">
+    <div class="x_panel" >
+        <div class="form-inline">
+            <div class="form-group">
+                <label>样式名称 </label>
+                <input type="text" ng-model="search.name"  class="form-control" />
+            </div>
+            <button class="btn btn-primary" ng-click="find(1)" >查询</button>
+            <button class="btn btn-default" ng-click="search.name=''" >重置</button>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped table-hover" >
+        <thead class="title">
+        <tr>
+            <th class="text-center">NO</th>
+            <th>相关人员</th>
+            <th>操作内容</th>
+            <th>操作人</th>
+            <th>操作时间</th>
+            <th style="width:120px"  ng-if="$root.hasPower('删除日志')">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-if="pageModel.data.length == 0">
+            <td colspan="100" class="text-center">暂无记录</td>
+        </tr>
+        <tr ng-repeat="item in pageModel.data">
+            <td class="text-center">{{$index + 1+pageModel.pageSize*pageModel.pageIndex}}</td>
+            <td>{{item.personName}}</td>
+            <td>{{item.comment}}</td>
+            <td>{{item.opName}}</td>
+            <td>{{item.optime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td ng-if="$root.hasPower('删除日志')">
+                <a href='javascript:void(0)' ng-click='del(item)' class='btn btn-xs btn-link'><span class='fa fa-trash'></span>删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-footer clearfix" >
+        <page page-model="pageModel"></page>
+    </div>
+</div>

@@ -1,0 +1,132 @@
+<div ng-controller="instanceCtrl" >
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="x_panel" >
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>名称 </label>
+                        <input type="text" ng-model="search.name"  class="form-control" />
+                    </div>
+                    <button class="btn btn-primary" ng-click="find(1)" >查询</button>
+                    <button class="btn btn-default" ng-click="search.name=''" >重置</button>
+                    <button class="btn btn-primary pull-right mr10"  ng-click="edit()" >添加</button>
+
+                </div>
+            </div>
+            <table class="table table-bordered table-striped table-hover" >
+                <thead class="title">
+                <tr>
+                    <th class="text-center">NO</th>
+                    <th>名称</th>
+                    <th>场景</th>
+                    <th>参数</th>
+                    <th>创建时间</th>
+                    <th style="width:120px" >操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="pageModel.data.length == 0">
+                    <td colspan="100" class="text-center">暂无记录</td>
+                </tr>
+                <tr ng-repeat="item in pageModel.data">
+                    <td class="text-center">{{$index + 1+pageModel.pageSize*pageModel.pageIndex}}</td>
+                    <td><span role="button" class="btn-link" ng-click="selectInstance(item)">{{item.name}}</span></td>
+                    <td>{{item.scene.name}}</td>
+                    <td><ul>
+                        <li ng-repeat="param in item.params"><span style="font-style: italic">{{param.key}}：</span>{{param.value}}</li>
+                    </ul></td>
+
+                    <td>{{item.createTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td >
+                        <span ng-click='del(item)' class='btn btn-xs btn-link'><span class='fa fa-trash'></span>删除</span>
+                        <span ng-click='edit(item)' class='btn btn-xs btn-link'><span class='fa fa-edit'></span>编辑</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="page-footer clearfix" >
+                <page page-model="pageModel"></page>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="curInstance">
+        <div class="col-xs-6">
+            <div class="x_panel wider" >
+                <div class="x_title" >
+                    <a ng-click='expandAll(cacheTree)' role="button" class='btn-link' title="展开与收缩">
+                        <i class="glyphicon"
+                           ng-class="{'glyphicon-resize-small':cacheTree.expanded,'glyphicon-resize-full':!cacheTree.expanded}" ></i></a>
+                    {{curInstance.name}}数据缓存树
+                    <span class="pull-right">url:<span role="button" class="btn-link" style="margin-left: 5px;">/api/cacheTree/{{curInstance._id}}</span></span>
+                </div>
+                <div class="x_content" style="z-index: 1">
+                    <div class="alert" role="alert" ng-show="!cacheTree.length">无数据</div>
+                    <tree-view node-list="cacheTree" select-node="selectDataCache" config="{edit:false,showStatus:true}"></tree-view>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="x_panel form-horizontal" ng-if="curCache">
+                <div class="x_title" >数据缓存详情</div>
+
+                <form name="form" novalidate>
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label">编码：</label>
+                        <div class="col-xs-6 mt7">
+                            {{curCache.code}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label required">接口名称：</label>
+                        <div class="col-xs-6 mt7">
+                            {{curCache.interface.name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label required">接口url：</label>
+                        <div class="col-xs-6 mt7">
+                            {{curCache.url}}
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="curCache.interface.url">
+                        <label class="col-xs-2 control-label">
+                            <input type="radio"  ng-model="curCache.useFake" ng-value=false name ="useFake">从接口获取
+                        </label>
+                        <div class="col-xs-2 mt7"  >
+                            <span ng-click="getRealData(curCache)" class='btn btn-xs btn-link' >重新获取</span>
+                        </div>
+                        <label class="col-xs-2 control-label"> 请求次数：  </label>
+                        <div class="col-xs-1 mt7">
+                            <div >{{curCache.fetchCnt}}  </div>
+                        </div>
+                        <label class="col-xs-2 control-label">  更新时间：  </label>
+                        <div class="col-xs-3 mt7">
+                            <div >{{curCache.realTime| date:'yyyy-MM-dd HH:mm:ss'}}  </div>
+                        </div>
+                        <div class="col-xs-12" style="margin-bottom: 15px;"  ng-repeat="param in curCache.params track by $index"  >
+                            <label class="col-xs-4 control-label">{{param.key}}：</label>
+                            <div class="col-xs-6" >
+                                <input type="text" ng-model="param.value" placeholder="--默认值：{{param.defVal}}--"  class="form-control"
+                                       uib-typeahead="o.code as o.code+' ('+o.value+') ' for o in dateDict"
+                                       typeahead-show-hint="true" typeahead-min-length="0" >
+                            </div>
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-2">
+                            <textarea class="form-control" ng-model="curCache.realData" readonly style="min-height: 150px;resize: both"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">
+                            <input type="radio"  ng-model="curCache.useFake" ng-value=true name ="useFake">模拟数据
+                        </label>
+                        <div class="col-xs-10 col-xs-offset-2"  >
+                            <textarea class="form-control" ng-model="curCache.fakeData" style="min-height: 150px;resize: both"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <button class="btn btn-primary pull-right" ng-click="saveCacheData(form,curCache)">保存</button>
+            </div>
+        </div>
+    </div>
+
+</div>

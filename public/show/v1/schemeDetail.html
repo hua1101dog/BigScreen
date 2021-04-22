@@ -1,0 +1,55 @@
+<div style="display: table;width:100%" >
+    <div style="display:table-cell;overflow-y: hidden;" id="mapContainer">
+        <div style="position: relative">
+            <div style="position: absolute;right: 15px;top:35px;display: inline-block;"  >
+                <button class="btn btn-info" ng-show="$ctrl.curScheme.schemeType.hasSector &&!$ctrl.curScheme.schemeType.isLight"
+                        ng-class="{active:$ctrl.curScheme.showVidicon}" ng-click="toggleVidicon()" >显示覆盖范围</button>
+                <div class="btn-group " role="group" mr15 >
+                    <button class="btn btn-default" ng-class="{'active btn-warning':$ctrl.curMapObj.curMode=='2D'}" ng-click="toggleMapMod('2D')">2D</button>
+                    <button class="btn btn-default" ng-class="{'active btn-warning':$ctrl.curMapObj.curMode=='3D'}" ng-click="toggleMapMod('3D')">3D</button>
+                </div>
+            </div>
+            <uib-accordion close-others="true" style="position: absolute;width:300px;right: 15px;top:100px;">
+                <div uib-accordion-group class="panel panel-default accordion-panel" ng-if="$ctrl.curScheme.sensors.length" is-open="$ctrl.curScheme.sensors.open" >
+                    <uib-accordion-heading > <span class="text-info">传感器列表</span>
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-top': $ctrl.curScheme.sensors.open, 'glyphicon-triangle-bottom': !$ctrl.curScheme.sensors.open}"></i>
+                    </uib-accordion-heading>
+                    <table class="table table-striped table-hover" >
+                        <thead class="title">
+                        <tr>
+                            <th class="text-center">名称</th>
+                            <th>监测值</th>
+                            <th>时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in $ctrl.curScheme.sensors">
+                            <td ><span uib-tooltip="{{item.mac}}">{{item.name}}</span></td>
+                            <td>
+                                <ul>
+                                    <li ng-repeat="param in item.params" style="white-space: nowrap;">
+                                        <a href='javascript:void(0)' class="btn-link" ng-click='showDetectHistory(param.sensor_id,param.detect_param_id,param.param_name)'>
+                                            {{param.name}}：{{param.val}}</b>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>{{item.createDate| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div uib-accordion-group class="panel panel-default accordion-panel" is-open="it.open" ng-repeat="it in $ctrl.curScheme.policyList">
+                    <uib-accordion-heading > <span class="text-info">{{it.title}} </span> <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-top': it.open, 'glyphicon-triangle-bottom': !it.open}"></i>
+                    </uib-accordion-heading>
+                    <div ng-bind-html="it.content|to_trusted"></div>
+                </div>
+            </uib-accordion>
+        </div>
+
+        <!--<div id="5c742e8bd5cd283dd0a31864" >  </div>-->
+
+        <!--<div id="{{map.mapId}}"  class="mapContainer" ng-repeat="map in $ctrl.mapList" >  </div>-->
+    </div>
+</div>

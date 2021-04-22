@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{item.id?'编辑':'添加'}}空间</h4>
+</div>
+<div class="modal-body container-fluid form-horizontal">
+    <form name="form" novalidate>
+        <div class="form-group" ng-if="item.pcode">
+            <label class="col-xs-4 control-label">上级分类：</label>
+            <div class="col-xs-6">
+                <div style="margin-top: 8px">{{item.ptexts}}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-4 control-label">空间编码：</label>
+            <div class="col-xs-6">
+                <input type="text" class="form-control" ng-model="item.code" name="code" disabled placeholder="系统生成"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-4 control-label required">空间名称：</label>
+            <div class="col-xs-6">
+                <input type="text" class="form-control" ng-model="item.text" name="text"
+                       uib-tooltip="{{!item.text?'不可为空':(form.text.$invalid?'有重名':null)}}" ensure-unique="spaceName" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">项目规划：</label>
+            <button class="btn btn-sm btn-default" ng-click="item.policyList.push({})"><i class="glyphicon glyphicon-plus" ></i>添加</button>
+        </div>
+        <div class="well row" style="margin-bottom: -20px">
+            <div ng-repeat="it in item.policyList track by $index" class="form-group" style="margin-bottom: 5px">
+                <div class="col-xs-2">
+                    <input type="text" class="form-control" ng-model="it.title" required placeholder="--标题--"> </input>
+                </div>
+                <div class="col-xs-9">
+                    <div class="ueditor" ng-model="it.content" required></div>
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-sm btn-default"
+                            ng-click="item.policyList.splice(item.policyList.indexOf(it),1)"><i class="glyphicon glyphicon-minus"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form,item)">确定</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>
+
+

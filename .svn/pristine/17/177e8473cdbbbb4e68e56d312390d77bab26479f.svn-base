@@ -1,0 +1,34 @@
+<div style="display: table;width: 100%" ng-controller="dataTreeCtrl">
+    <div style="width:160px;display: table-cell;position: absolute">
+        <!--style="overflow-y: auto;overflow-x: hidden"-->
+        <ul class="leftList" id="folderScroll">
+            <li ng-repeat="type in typeList" style="position: relative">
+                <form novalidate name="form">
+                    <button ng-click="selectType(type)" class="btn btn-default nameBtn" ng-class="{'btn-success':type == curType,'active':type == curType}" >{{type.name}}</button>
+                    <div class="absDiv hoverShow" >
+                        <button  class="btn btn-default roundBtn" ng-click="editType(type)" title="编辑"><i class="glyphicon glyphicon-pencil"></i></button>
+                        <button  class="btn btn-danger roundBtn" ng-click="delType(type)" title="删除"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                </form>
+            </li>
+            <li >
+                <button class="btn btn-primary roundBtn" style="margin-left: 45px;" ng-click="editType()"><i class="glyphicon glyphicon-plus"></i></button>
+            </li>
+        </ul>
+    </div>
+    <div style="padding-left: 115px;display: table;width: 50%" >
+        <div class="x_panel wider" style="display:table-cell;width: 50%">
+            <div class="x_title" >
+                <a ng-click='expandAll(dataTree)' role="button" class='btn-link' title="展开与收缩">
+                    <i class="glyphicon"
+                       ng-class="{'glyphicon-resize-small':dataTree.expanded,'glyphicon-resize-full':!dataTree.expanded}" ></i></a>
+                数据接口树
+                <span  ng-click='addTopNode()' role="button" class='btn-link pull-right'><i class='fa fa-plus' ></i>接口</span>
+            </div>
+            <div class="x_content" style="z-index: 1">
+                <div class="alert" role="alert" ng-show="!dataTree.length">无数据</div>
+                <tree-view node-list="dataTree" select-node="selectDataNode" config="{edit:true}"></tree-view>
+            </div>
+        </div>
+    </div>
+</div>

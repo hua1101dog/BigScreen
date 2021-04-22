@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h4 class="modal-title">修改密码</h4>
+</div>
+<div class="modal-body container-fluid form-horizontal">
+    <form name="form" novalidate   >
+        <div class="form-group" >
+            <label class="col-xs-2 control-label">用户账号：</label>
+            <div class="col-xs-8 mt7">
+               <span >{{user.account}}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">原密码：</label>
+            <div class="col-xs-8">
+                <input type="password" class="form-control"  ng-model="user.oldPass"  required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label required">新密码：</label>
+            <div class="col-xs-8 mt7">
+                <input type="password" class="form-control" ng-model="user.newPass" required/>
+            </div>
+        </div><div class="form-group">
+        <label class="col-xs-2 control-label required">确认密码</label>
+        <div class="col-xs-8 mt7">
+            <input type="password" class="form-control" ng-model="user.repeatPass" required/>
+        </div>
+    </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form)">确认</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>

@@ -1,0 +1,108 @@
+<div ng-controller="mapCtrl">
+    <img src="images/refuse.png" class="hand close" id="closePopPhoto" style="top:60px;right:5px;position:absolute" ng-show="showMap" ng-click="showMap = false"></img>
+    <div id="canvas" style="height:600px;width: 100%" ng-show="showMap">
+
+    </div>
+    <div  style="display: table;width: 100%" ng-show="!showMap">
+        <div style="width:140px;display: table-cell;vertical-align: top">
+            <!--style="overflow-y: auto;overflow-x: hidden"-->
+            <div  id="folderScroll">
+                <div class="x_panel wider">
+                    <div class="x_title" >
+                        <a ng-click='expandAll(spaceTree)' role="button" class='btn-link' title="展开与收缩">
+                            <i class="glyphicon"
+                               ng-class="{'glyphicon-resize-small':spaceTree.expanded,'glyphicon-resize-full':!spaceTree.expanded}" ></i></a>
+                        空间
+                        <a  ng-click='addTopNode()' ng-if="$root.hasPower('编缉空间')" role="button" class='btn-link pull-right'><i class='fa fa-plus' ></i>项目</a>
+                    </div>
+                    <div class="x_content" style="z-index: 1">
+                        <div class="alert" role="alert" ng-show="!spaceTree">无空间</div>
+                        <tree-view node-list="spaceTree" select-node="selectSpace" config="{edit:$root.hasPower('编缉空间')}"></tree-view>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="padding-left: 5px" >
+            <div class="x_panel" >
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>名称 </label>
+                        <input type="text" ng-model="search.name"  class="form-control" />
+                    </div>
+                    <button class="btn btn-primary" ng-click="find(1)" >查询</button>
+                    <button class="btn btn-default" ng-click="search.name=''" >重置</button>
+
+                    <button class="btn btn-primary pull-right"  ng-if="$root.hasPower('编辑地图')" ng-disabled="!curSpace"  ng-click="addFiles({'spaceCode':curSpace.code})" >添加</button>
+                    <!--<button class="btn btn-danger pull-right mr5"  ng-if="$root.hasPower('编辑地图')" ng-disabled="!hasChecked(pageModel.data)" ng-click="delAll()">批量删除</button>
+                    <button class="btn btn-default pull-right mr5"  ng-if="$root.hasPower('下载地图')" ng-disabled="!hasChecked(pageModel.data)" ng-click="downloadZip()">下载</button>-->
+                </div>
+            </div>
+
+            <table class="table table-bordered table-striped table-hover" >
+                <thead class="title">
+                <tr>
+                    <th class="text-center">NO</th>
+                    <th th-check items="pageModel.data" class="text-center" style="width:20px"></th>
+                    <th>名称</th>
+                    <th>空间</th>
+                    <th>备注</th>
+                    <th>创建时间</th>
+                    <th style="width:120px" ng-if="$root.hasPower('编辑地图')">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="pageModel.data.length == 0">
+                    <td colspan="100" class="text-center">暂无记录</td>
+                </tr>
+                <tr ng-repeat="item in pageModel.data">
+                    <td class="text-center">{{$index + 1+pageModel.pageSize*pageModel.pageIndex}}</td>
+                    <td td-check item="item"></td>
+                    <td><a href="../birdMap/download?id={{item._id}}" download="{{item.name}}" class="btn-link">{{item.name}}</a></td>
+                    <td>{{item.spaceCode|keyToValue:flatSpaceTree:'code':'text'}}</td>
+                    <th>{{item.comment}}</th>
+                    <td>{{item.createTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-if="$root.hasPower('编辑地图')">
+                        <a href='javascript:void(0)' ng-click='del(item)' class='btn btn-xs btn-link'><span class='fa fa-trash'></span>删除</a>
+                        <span  ng-click='reUpload(item)' class='btn btn-xs btn-link'><span class='fa fa-upload'></span>重新上传</span>
+                        <a href='javascript:void(0)' ng-click='mapDetail(item)' class='btn btn-xs btn-link'><span class='fa fa-map-marker'></span>查看</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="page-footer clearfix" >
+                <page page-model="pageModel"></page>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .nameBtn{
+        width: 140px;
+        margin-bottom: 5px;
+        position: relative;
+        white-space:normal;
+        word-break: break-word;
+    }
+    .absDiv{
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        z-index: 2;
+        right: -50px;
+    }
+    .hoverShow{
+        display: none;
+    }
+    li:hover .hoverShow{
+        display: block;
+    }
+    .roundBtn {
+        padding: 4px;
+        border-radius: 15px;
+        line-height: 14px;
+    }
+    .nameBtn.active{
+        box-shadow: inset 0 3px 5px rgba(0,0,0,.5)
+    }
+</style>

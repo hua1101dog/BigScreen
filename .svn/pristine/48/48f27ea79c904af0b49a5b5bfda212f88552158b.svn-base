@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="admin.login">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大屏配置系统</title>
+<link rel="icon" href="favicon.ico"/>
+<link href="../res/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/login.css" rel="stylesheet" type="text/css" />
+</head>
+<body ng-controller="loginController" ng-cloak>
+<div class="loginContent">
+  <div class="loginBox ">
+    <p>大屏配置系统</p>
+     <div class="red">{{admin.error}}</div>
+    <ul >
+      <li class="text" style="{{style}}" ><span class="loginspan"><i  class="glyphicon glyphicon-user"></i></span>
+      <input  type="text" placeholder="Username" ng-model="admin.account" >
+      </li>
+      <li class="text" style="{{style}}"><span class="loginspan"><i class="  glyphicon glyphicon-lock"></i></span>
+	  <input  type="password" placeholder="Password"  ng-model="admin.password">
+	  </li>
+
+      <li class="btn" ng-click="login()">登录</li>
+      
+       <li class="text" uib-collapse="!isCollapsed" style="position:relative">
+         <button class="btn btn-success" ng-click="sendMail()" style="position: absolute;  right: 0px; top: 60px;">重设密码</button>
+         <span class="loginspan"><i class="glyphicon glyphicon-envelope"></i></span>
+         <input type="text" name="email" ng-model="email" placeholder="Email" />
+      </li>
+     <!-- <li>
+        <a ng-click="isCollapsed = !isCollapsed">忘记密码</a>
+     </li>-->
+    </ul>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="../res/jquery.min.js"></script>
+<script type="text/javascript" src="../res/layer/layer.js"></script>
+<script type="text/javascript" src="../res/angular1.5.11/angular.min.js"></script>
+<script type="text/javascript" src="../res/angular1.5.11/angular-cookies.min.js"></script>
+<script type="text/javascript" src="../res/angular1.5.11/ui-bootstrap-tpls.js"></script>
+<script type="text/javascript" src="loginController.js"></script>
+</html>

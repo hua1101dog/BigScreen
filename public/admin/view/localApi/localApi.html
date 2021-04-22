@@ -1,0 +1,61 @@
+<div ng-controller="localApiCtrl">
+    <div  style="display: table;width: 100%" >
+        <div style="width:30%;display: table-cell;vertical-align: top">
+            <!--style="overflow-y: auto;overflow-x: hidden"-->
+            <div class="x_panel wider">
+                <div class="x_title" >
+                    <a ng-click='expandAll(spaceTree)' role="button" class='btn-link' title="展开与收缩">
+                        <i class="glyphicon"
+                           ng-class="{'glyphicon-resize-small':spaceTree.expanded,'glyphicon-resize-full':!spaceTree.expanded}" ></i></a>
+                    空间
+                </div>
+                <div class="x_content" style="z-index: 1">
+                    <div class="alert" role="alert" ng-show="!spaceTree">无空间</div>
+                    <tree-view node-list="spaceTree" select-node="selectSpace" config="{edit:false}"></tree-view>
+                </div>
+            </div>
+        </div>
+        <div style="display: table-cell;padding-left: 5px;width: 30%">
+            <div class="x_panel wider">
+                <div class="x_title" >
+                    <a ng-click='expandAll(schemeMenu)' role="button" class='btn-link' title="展开与收缩">
+                        <i class="glyphicon"
+                           ng-class="{'glyphicon-resize-small':schemeMenu.expanded,'glyphicon-resize-full':!schemeMenu.expanded}" ></i></a>
+                    大屏菜单
+                </div>
+                <div class="x_content" style="z-index: 1">
+                    <div class="alert" role="alert" ng-show="!schemeMenu">无空间</div>
+                    <tree-view node-list="schemeMenu" select-node="selectScheme" config="{edit:false}"></tree-view>
+                </div>
+            </div>
+
+        </div>
+        <div style="display: table-cell;padding-left: 5px">
+            <div class="x_panel">
+                <div class="x_title">
+                    接口
+                </div>
+                <div class="x_content" style="z-index: 1">
+                    <ul>
+                        <li>
+                            <label>演示大屏</label>
+                            <a target="_blank" class="btn-link" ng-href="{{curPark.showUrl}}">{{curPark.showUrl}}</a>
+                        </li>
+                        <li>
+                            <label>菜单接口</label>
+                            <a target="_blank" class="btn-link" ng-href="{{curPark.menuUrl}}">{{curPark.menuUrl}}</a>
+                        </li>
+                        <li>
+                            <label>方案接口</label>
+                            <a target="_blank" class="btn-link" ng-href="{{curPark.schemeUrl}}">{{curPark.schemeUrl}}</a>
+                        </li>
+                        <li>
+                            <label>地图接口</label>
+                            <a target="_blank" class="btn-link" ng-href="{{curPark.mapUrl}}">{{curPark.mapUrl}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

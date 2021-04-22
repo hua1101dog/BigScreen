@@ -1,0 +1,83 @@
+<div style="display: table;width:100%" >
+
+    <div style="display:table-cell;overflow-y: hidden;" id="mapContainer">
+        <div style="position: relative">
+            <uib-accordion close-others="false" style="position: absolute;width:140px;">
+                <div uib-accordion-group class="panel panel-default accordion-panel" ng-repeat="markType in $ctrl.curScheme.schemeType.types" is-open="markType.open" >
+                    <uib-accordion-heading >
+                        <span class="text-info">{{markType.title}} </span>
+                        <i class="pull-right glyphicon"
+                           ng-class="{'glyphicon-triangle-top': markType.open, 'glyphicon-triangle-bottom': !markType.open}"></i>
+                    </uib-accordion-heading>
+                    <ul class="leftList" style="max-height: 500px;">
+                        <li ng-repeat="item in $ctrl.curScheme.markers|filter:{type:markType.type}" style="position: relative">
+                            <form novalidate name="form">
+                                <button  ng-click="selectItem(item)" class="btn btn-default nameBtn"
+                                         ng-class="$ctrl.getMarkerClass(item)" >{{item.name}}</button>
+                                <div class="absDiv hoverShow" >
+                                    <button  class="btn btn-default roundBtn" ng-click="editItem(item,markType)" title="编辑"><i class="glyphicon glyphicon-pencil"></i></button>
+                                    <button  class="btn btn-danger roundBtn" ng-click="delItem(item,markType)" title="删除"><i class="glyphicon glyphicon-remove"></i></button>
+                                </div>
+                            </form>
+                        </li>
+                        <li >
+                            <button class="btn btn-primary roundBtn" style="margin-left: 45px" ng-click="editItem(null,markType)"><i class="glyphicon glyphicon-plus"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </uib-accordion>
+
+            <div style="position: absolute;transform: translate(-50%,0);left: 50%;" id="iconList">
+                <div ng-repeat="item in $ctrl.curMarkType.icons" class="iconWraper">
+                    <img onerror="javascript:this.src='images/detail.png';"
+                         class="layui-anim" uib-tooltip="{{item.name}}" tooltip-placement="bottom"
+                         ng-class="{'grayscale':item.url!=$ctrl.curMarker.imgMarker,'layui-anim-scale':item.url==$ctrl.curMarker.imgMarker}" ng-src="{{item.url}}" ng-click="setImgMarker(item)">
+                </div>
+                <!---->
+            </div>
+            <div style="position: absolute;transform: translate(-50%,40px);left: 50%;">
+                <ul class="ul-block">
+                    <li  ng-repeat="point in $ctrl.curMarker.points track by $index" role="button" class="btn btn-default" ng-class="{'btn-warning':$ctrl.curMarker.curPoint == point}" ng-click="$ctrl.selectPoint($ctrl.curMarker,point)">
+                        <span  >
+                            <i  class="glyphicon glyphicon-map-marker" ></i>
+                            {{$index+1}}
+                        </span>
+                        <a ng-click="$ctrl.delPoint(point)"><i class="fa fa-remove"></i></a></li>
+                </ul>
+                <!---->
+            </div>
+
+            <div style="position: absolute;right: 0;top:35px;display: inline-block;"  >
+                <button class="btn btn-primary" ng-click="saveMarkers()"><i class="glyphicon glyphicon-floppy-disk"></i>保存</button>
+                <button class="btn btn-info" ng-show="$ctrl.curScheme.schemeType.hasSector &&!$ctrl.curScheme.schemeType.isLight"
+                        ng-class="{active:$ctrl.curScheme.showVidicon}" ng-click="toggleVidicon()" >显示覆盖范围</button>
+                <div class="btn-group " role="group" mr15>
+                    <button class="btn btn-default" ng-class="{active:$ctrl.curMapObj.curMode=='2D'}" ng-click="toggleMapMod('2D')">2D</button>
+                    <button class="btn btn-default" ng-class="{active:$ctrl.curMapObj.curMode=='3D'}" ng-click="toggleMapMod('3D')">3D</button>
+                </div>
+            </div>
+            <uib-accordion close-others="false" style="position: absolute;width:300px;right: 0;top:100px;">
+                <div uib-accordion-group class="panel panel-default accordion-panel" is-open="it.open" ng-repeat="it in $ctrl.curScheme.policyList">
+                    <uib-accordion-heading > <span class="text-info">{{it.title}} </span> <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-top': it.open, 'glyphicon-triangle-bottom': !it.open}"></i>
+                    </uib-accordion-heading>
+                    <div ng-bind-html="it.content|to_trusted"></div>
+                </div>
+            </uib-accordion>
+        </div>
+
+        <!--<div id="5c742e8bd5cd283dd0a31864" >  </div>-->
+
+        <!--<div id="{{map.mapId}}"  class="mapContainer" ng-repeat="map in $ctrl.mapList" >  </div>-->
+    </div>
+</div>
+<style>
+    #iconList>div.iconWraper{
+        text-align: center;float: left;width: 36px;height: 36px;cursor: pointer;
+    }
+    #iconList>div.iconWraper:hover img{
+        filter: grayscale(0);
+    }
+    #iconList>div.iconWraper img{
+        max-width: 32px;max-height: 32px;
+    }
+</style>

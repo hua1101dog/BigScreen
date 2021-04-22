@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" id="mainFrame">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <title><%= spaceName%></title>
+    <link href="../res/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/style.css" rel="stylesheet" type="text/css" />
+    <link href="../stylesheets/iconfont.css" rel="stylesheet" type="text/css" >
+</head>
+<body ng-app="showApp"  ng-controller="showController" ng-cloak>
+    <menu  node-list="schemeMenu" show-scheme="showScheme(scheme)" style="position: absolute" ></menu>
+    <scheme-detail scheme="pconfig.scheme" ></scheme-detail>
+    <div class="photoDiv" ng-if="curPic.on">
+        <img src="/admin/images/refuse.png" class="hand" id="closePopPhoto" style="top:0;right:0;position:absolute" ng-click="curPic.on = false"></img>
+        <img class="photo" ng-src="{{curPic.url}}" image-load="wheel()"></img>
+    </div>
+</body>
+<script type="text/javascript" src="/res/jquery.min.js"></script>
+<script type="text/javascript" src="/res/angular1.5.11/angular.min.js"></script>
+<script type="text/javascript" src="/res/angular1.5.11/ui-bootstrap-tpls.js"></script>
+<script type="text/javascript" src="/res/layer/layer.js"></script>
+<script type="text/javascript" src="/res/AirocovMap.min.js"></script>
+<script type="text/javascript" src="/res/reconnectingwebsocket/reconnecting-websocket.min.js"></script>
+<script type="text/javascript" src="/res/wheelzoom-feng.js"></script>
+<script>
+    var app = angular.module("showApp", ['ui.bootstrap']);
+    app.spaceCode ="<%= spaceCode%>"
+</script>
+<script type="text/javascript" src="/javascripts/showController.js"></script>
+<script type="text/javascript" src="/javascripts/component.js"></script>
+</html>

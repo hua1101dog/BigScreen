@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><MapStyleDefine>
+  <AddSource>
+    <SourceItem source-name="vectormap" source-url="http://mapvectors.map.qq.com" visible="1" minzoom="4" maxzoom="20" />
+    <SourceItem source-name="indoor_data" source-url="http://mapvectors.map.qq.com" visible="1" minzoom="16" maxzoom="20" />
+    <SourceItem source-name="sattlelite" source-url="http://mapvectors.map.qq.com" visible="0" minzoom="4" maxzoom="18" />
+    <SourceItem source-name="heatmap" source-url="" visible="0" minzoom="0" maxzoom="12" />
+  </AddSource>
+  <AliasFontDefine>
+    <FontItem name="FONT_STYLE_CHN" value="wenquanyi"/>
+    <FontItem name="FONT_STYLE_CHN2" value="msyhbd"/>
+    <FontItem name="FONT_STYLE_ENG" value="Tahoma"/>
+  </AliasFontDefine>
+  <AliasStyleDefine>
+    <AliasIconStyleDefine>
+    </AliasIconStyleDefine>
+    <AliasDashLineStyleDefine>
+    </AliasDashLineStyleDefine>
+    <AliasPointStyleDefine>
+    </AliasPointStyleDefine>
+    <AliasLineStyleDefine>
+    </AliasLineStyleDefine>
+    <AliasPolygonStyleDefine>
+    </AliasPolygonStyleDefine>
+    <AliasBuildingStyleDefine>
+    </AliasBuildingStyleDefine>
+    <AliasTreeStyleDefine>
+      <AliasItem AliasName="tree_default" StyleID="0"/>
+    </AliasTreeStyleDefine>
+    <AliasArrowStyleDefine>
+    </AliasArrowStyleDefine>
+    <AliasRoadSignStyleDefine>
+    </AliasRoadSignStyleDefine>
+    <AliasTextStyleDefine>
+      <AliasItem AliasName="noeffect_text" StyleID="0" />
+    </AliasTextStyleDefine>
+  </AliasStyleDefine>
+  <CommonStyleDefine>
+    <IconStyleDefine>
+    </IconStyleDefine>
+    <DashLineStyleDefine>
+    </DashLineStyleDefine>
+    <BaseMapStyle>
+      <KVItem key="ground_grid" value="| color 255 3 125 0 | childrenNum 4 | gridWidth 0 | lineWidth 0" />
+      <KVItem key="background_texture" value="terrain_day.png" />
+      <KVItem key="poi_icon_indoor" value="poi_icon_indoor.png" />
+      <KVItem key="building_enabled" value="1" />
+      <KVItem key="shadow" value="color 200 200 200 128" />
+      <KVItem key="building_global_transparency" value="1" />
+    </BaseMapStyle>
+  </CommonStyleDefine>
+  <PointStyleDefine>
+  </PointStyleDefine>
+  <LineStyleDefine>
+  </LineStyleDefine>
+  <PolygonStyleDefine>
+  </PolygonStyleDefine>
+  <BuildingStyleDefine>
+  </BuildingStyleDefine>
+  <TreeStyleDefine>
+    <Style name="tree_default" type="5">
+      <Rule>
+        <Scale>0,20</Scale>
+        <TreeSymbolizer height="3"/>
+      </Rule>
+    </Style>
+  </TreeStyleDefine>
+  <ArrowStyleDefine>
+  </ArrowStyleDefine>
+  <RoadSignStyleDefine>
+  </RoadSignStyleDefine>
+  <TextStyleDefine>
+    <Style name="noeffect_text" type="0">
+      <Rule>
+        <Scale>0,20</Scale>
+        <TextSymbolizer font-name="FONT_STYLE_CHN" font-size="0" font-color="#333333" font-weight="bold" font-style="halo" halosize="1" bgsize="0" halocolor="#ffffffcc" density="0" fillarc="1.5" texttype="PointTextSymbolizer" tag-for-modify="unused" />
+      </Rule>
+    </Style>
+  </TextStyleDefine>
+</MapStyleDefine>

@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h4 class="modal-title">编辑字典</h4>
+</div>
+    <div class="modal-body form-horizontal">
+        <form name="form" novalidate>
+            <div class="form-group">
+                <label class="col-sm-2 control-label required">字典名称：</label>
+                <div class="col-sm-4 mt7">{{item.name}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2 control-label required">键与值：</label>
+                <div class="col-xs-10" >
+                    <div ng-repeat="it in item.list track by $index" class="form-inline" style="margin-bottom: 5px">
+                        <input type="number" class="form-control" ng-model="it.id" required> </input>
+                        <input type="text" class="form-control" ng-model="it.val" required> </input>
+                        <button class="btn btn-sm btn-default"
+                                ng-click="item.list.splice(item.list.indexOf(it),1)"><i class="glyphicon glyphicon-minus"></i></button>
+                    </div>
+                    <button class="btn btn-sm btn-default" ng-click="item.list.push({})"><i class="glyphicon glyphicon-plus" ></i>添加</button>
+                </div>
+            </div>
+        </form>
+    </div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form)">确认</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>

@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title">修改图标名称</h4>
+</div>
+<div class="modal-body container-fluid form-horizontal">
+    <form name="form" novalidate>
+        <div class="form-group" ng-repeat="item in items">
+            <div class="col-xs-3">
+                <div class="photoWraper pull-right" >
+                    <div ng-click="showPhoto(item.path)">
+                        <img onerror="javascript:this.src='images/detail.png';"
+                             ng-src="{{processImgUrl(item.path,'min')}}" >
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <label role="button" style="white-space: nowrap;">原名：</label>{{item.name}}
+                <input type="text"  class="form-control" ng-model="item.newName" name="newName"
+                       uib-tooltip="{{item.newName && form.newName.$invalid?'有重名':null}}"   id="{{item.id}}" ensure-unique="iconName" api="../icon/checkUniqueName_mute" required/>
+            </div>
+            <div class="col-xs-4" ng-if="item.iconType != 2">
+                <label role="button" style="white-space: nowrap;">原scaleId：</label>{{item.scaleId}}
+                <input type="number"  class="form-control" ng-model="item.newScaleId" name="newScaleId"/>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form,items)">确定</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>
+
+

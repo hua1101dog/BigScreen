@@ -1,0 +1,35 @@
+<div class="navbar-form" ng-controller = 'roleListController'>
+<h2 class="title">角色管理</h2>
+	<div class="search  form-inline">
+		 <div class="form-group pull-right">
+			<button class="btn btn-primary" ng-click="find(1)" >查询</button> 
+			<button class="btn btn-success" ng-click="showModal()"  ng-show="getAccess(curMenu,'add')"><i class="glyphicon glyphicon-plus mr5"></i>新增</button>
+		</div>
+	</div>
+		   <table class="table table-bordered table-striped table-hover" >
+			<thead class="title">
+				 <th class="text-center">NO</th>
+                 <th>角色名称</th>
+                 <th>人数</th>
+                 <th>操作</th>
+			</thead>
+			<tbody>
+				<tr ng-if="items.totalPage == 0"><td colspan="9" class="text-center">系统没有查询到相关数据！</td></tr>
+				<tr ng-repeat="item in items.list">
+					<td class="text-center">{{$index + 1+items.pageSize*(items.currentPage-1)}}</td>
+					<td>{{item.roleName}}</td>
+					<td>{{item.count}}</td>
+					<td class="text-center" id="delRole{{item.id}}">
+						<div ng-hide="item.id==1" >
+							<button uib-tooltip="修改" class="btn btn-default" ng-click="showModal(item)"  ng-show="getAccess(curMenu,'modify')"><i class="glyphicon glyphicon-pencil" ></i></button>
+							<button uib-tooltip="删除" class="btn btn-danger"  ng-click="del(item)"  ng-show="getAccess(curMenu,'del')"><i class="glyphicon glyphicon-trash" ></i></button>
+						</div>
+					</td>
+				</tr>
+				<tr></tr>
+			</tbody>
+		</table>
+        <div class="page-footer">
+				<ng-include src="'pager.html'"></ng-include>
+        </div>
+</div>

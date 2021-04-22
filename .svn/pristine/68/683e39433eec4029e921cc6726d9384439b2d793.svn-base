@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</body>
+<script type="text/javascript" src="/res/jquery.min.js"></script>
+<script>
+    (function() {
+        $.get("/api/cacheNode/5cd0de353b46fb5fcbce7a29/0r",function(resp){
+            if(resp.code ==0){
+                for(let code of resp.data){
+                    var iframeDom = document.createElement("iframe");
+                    iframeDom.setAttribute("src","http://beta.ovuems.com/view/video.html?cameraCode="+code);
+                    document.getElementsByTagName("body")[0].appendChild(iframeDom);
+                }
+            }
+        })
+    })($);
+</script>
+<style type="text/css">
+    html,body{
+        height: 100%;
+        margin: 0;
+    }
+    iframe{
+        width: 33%;
+        height: 50%;
+        float: left;
+        border: none;
+    }
+</style>
+</html>

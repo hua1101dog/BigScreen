@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{item.id?'编辑':'添加'}}账号</h4>
+</div>
+    <div class="modal-body form-horizontal">
+        <form name="form" novalidate>
+        <div class="form-group">
+            <label class="col-xs-4 control-label required">账号：</label>
+            <div class="col-sm-6">
+                <input type="text" ng-model="item.account" class="form-control" placeholder="2~20 characters!"
+                       required ng-minlength="2" ng-maxlength="20"
+                       uib-tooltip="{{item.account && form.account.$invalid?'有重名':null}}" id="{{item.id}}"
+                       ensure-unique="account" api="../sys/checkUniqueName_mute"
+                       popover-placement="top" popover-trigger="mouseenter">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-4 control-label required">登录密码：</label>
+            <div class="col-xs-6" uib-popover="6~50 characters!" popover-placement="top" popover-trigger="mouseenter">
+                <input type="{{passType?'text':'password'}}" ng-model="item.password" class="form-control"
+                       placeholder="" required ng-minlength="6" ng-maxlength="50">
+                <button class="btn btn-default" style="position: absolute;right:17px;top:1px;height:32px;border:none"
+                        ng-click="passType = !passType">
+                    <i class="glyphicon" ng-class="{'glyphicon-eye-open':!passType,'glyphicon-eye-close':passType}"></i>
+                </button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-4 control-label" >角色：</label>
+            <div class="col-xs-6">
+                <select class="form-control" required  ng-model="item.roleId" ng-options="o.id as o.name for o in getRoles" >
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">昵称：</label>
+            <div class="col-sm-6">
+                <input type="text" ng-model="item.nickname" class="form-control">
+            </div>
+        </div>
+        </form>
+    </div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save(form)">确认</button>
+    <button class="btn btn-warning" ng-click="$dismiss()">取消</button>
+</div>

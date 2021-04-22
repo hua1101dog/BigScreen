@@ -1,0 +1,70 @@
+<div ng-controller="iconCtrl" style="display: table;width: 100%">
+    <div style="width:150px;display: table-cell;">
+        <!--style="overflow-y: auto;overflow-x: hidden"-->
+        <div  id="folderScroll">
+            <ul >
+                <li ng-repeat="folder in folders" style="position: relative">
+                    <form novalidate name="form">
+                        <button ng-show="!folder.edit" ng-click="selectFolder(folder)" class="btn btn-default nameBtn" ng-class="{'active':folder == curFolder}" >{{folder.text}}</button>
+                        <input ng-show="folder.edit" uib-tooltip="{{!folder.textCopy?'不可为空':(form.textCopy.$invalid?'有重名':null)}}"
+                               ensure-unique="iconFolder"
+                               folder="text" ng-model="folder.textCopy" name="textCopy" class="form-control" required style="margin-bottom: 5px;"/>
+                        <div class="absDiv hoverShow" ng-show="!folder.edit && folder.text!='/'" ng-if="$root.hasPower('编辑图标夹')">
+                            <button  class="btn btn-default roundBtn" ng-click="editFolder(folder)" title="编辑"><i class="glyphicon glyphicon-pencil"></i></button>
+                            <button  class="btn btn-danger roundBtn" ng-click="delFolder(folder)" title="删除"><i class="glyphicon glyphicon-remove"></i></button>
+                        </div>
+                        <div class="absDiv" ng-show="folder.edit">
+                            <button  class="btn btn-primary roundBtn" ng-click="saveFolder(form,folder)" title="保存"><i class="glyphicon glyphicon-ok"></i></button>
+                            <button  class="btn btn-default roundBtn" ng-click="cancelEdit(folder)" title="撤消"><i class="fa fa-undo"></i></button>
+                        </div>
+                    </form>
+                </li>
+                <li class="text-center" ng-if="$root.hasPower('编辑图标夹')">
+                    <button class="btn btn-primary roundBtn" ng-click="folders.push({edit:true})"><i class="glyphicon glyphicon-plus"></i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div style="padding-left:5px" ng-style="{visibility:curFolder?'visible':'hidden'}">
+        <div class="x_panel" >
+            <div class="form-inline">
+                <div class="form-group">
+                    <label>名称 </label>
+                    <input folder="text" ng-model="search.name"  class="form-control" />
+                </div>
+                <button class="btn btn-primary" ng-click="find()" >查询</button>
+                <button class="btn btn-default" ng-click="search.name=''" >重置</button>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span role="button" class="btn-link " style="margin-right: 5px;" ng-click="checkAll(curFolder.list)">
+                <i class="glyphicon" ng-class="{'glyphicon-check':allChecked(curFolder.list),'glyphicon-unchecked':!allChecked(curFolder.list)}"></i>全选</span>
+                <span role="button" class="btn-link" ng-click="unCheckAll(curFolder.list)" ng-show="hasChecked(curFolder.list)">
+                <i class="glyphicon glyphicon-ban-circle" ></i>取消选中</span>
+
+                <button class="btn btn-primary pull-right" ng-click="addPhotos({'folder':curFolder.text })" >添加</button>
+                <button class="btn btn-danger pull-right" ng-disabled="!hasChecked(curFolder.list)" ng-click="delAll()">批量删除</button>
+                <button class="btn btn-default pull-right" ng-disabled="!hasChecked(curFolder.list)" ng-click="downloadZip()">下载</button>
+            </div>
+            <div class="panel-body" id="iconScroll">
+                <p ng-if="curFolder.list.length == 0" class="text-center">暂无图标</td></p>
+                <div class="clearfix">
+                    <div class="photoWraper"  ng-repeat="item in curFolder.list|filter:{name:search.name}">
+                        <div ng-click="showPhoto(item.url)">
+                            <img onerror="javascript:this.src='images/detail.png';"
+                                 ng-src="{{item.url}}" >
+                        </div>
+                        <label role="button" ng-style="{'background-color':item.checked?'#5bc0de':'dark'}" style="word-break: break-all;" ng-click="checkOne(item,curType.pageModel)"><i  ng-class="{'glyphicon-check':item.checked,'glyphicon-unchecked':!item.checked}" class="glyphicon"></i>
+                            {{item.name}}</label>
+                    </div>
+                </div>
+                <div class="clearfix" >
+                    <ng-include src="'common/pager.html'"></ng-include>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
